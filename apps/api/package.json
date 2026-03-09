@@ -1,0 +1,20 @@
+{
+  "name": "api",
+  "version": "1.0.50",
+  "scripts": {
+    "dev": "bun run --env-file=../../.env --watch src/index.ts",
+    "db:migrate": "bunx --bun --env-file=../../.env auth@latest migrate"
+  },
+  "dependencies": {
+    "@elysiajs/cors": "^1.4.1",
+    "@uhuru/types": "workspace:*",
+    "better-auth": "^1.5.4",
+    "drizzle-orm": "^0.45.1",
+    "elysia": "latest"
+  },
+  "devDependencies": {
+    "bun-types": "latest",
+    "drizzle-kit": "^0.31.9"
+  },
+  "module": "src/index.js"
+}
