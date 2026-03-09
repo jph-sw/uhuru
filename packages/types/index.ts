@@ -1,6 +1,7 @@
-// packages/types/index.ts
-export type User = {
+export type Site = {
   id: string;
   name: string;
-  role: 'admin' | 'user';
+  domain: string;
+  created_at: number;
+  updated_at: number;
 };

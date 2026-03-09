@@ -10,7 +10,8 @@
     "@uhuru/types": "workspace:*",
     "better-auth": "^1.5.4",
     "drizzle-orm": "^0.45.1",
-    "elysia": "latest"
+    "elysia": "latest",
+    "ulidx": "^2.4.1"
   },
   "devDependencies": {
     "bun-types": "latest",

@@ -11,7 +11,7 @@ export async function seed() {
     .get();
 
   if (existingUser) {
-    console.log("Admin user already exists. Skipping seeding.");
+    console.log("-> Admin user already exists. Skipping seeding.");
     return;
   }
 
@@ -23,19 +23,19 @@ export async function seed() {
 
   if (!user.name || !user.email || !user.password) {
     console.error(
-      "Admin user details are not fully provided in environment variables.",
+      "-> Admin user details are not fully provided in environment variables.",
     );
     return;
   }
 
   await auth.api.createUser({
-    body: { name: user.name, email: user.email, password: user.password },
+    body: {
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      role: "admin",
+    },
   });
 
-  await db
-    .update(userSchema)
-    .set({ role: "admin" })
-    .where(eq(userSchema.email, user.email));
-
-  console.log("Admin user seeded successfully.");
+  console.log("-> Admin user seeded successfully.");
 }

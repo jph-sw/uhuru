@@ -14,7 +14,7 @@ export default function TextField({
   const errors = useStore(field.store, (state) => state.meta.errors);
 
   return (
-    <div className="mb-1">
+    <div className="mb-3">
       <label>
         <div>{label}</div>
         <Input

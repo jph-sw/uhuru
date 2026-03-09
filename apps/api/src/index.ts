@@ -3,6 +3,7 @@ import { cors } from "@elysiajs/cors";
 import { auth } from "./auth";
 import { runMigrations } from "./db/migrate";
 import { seed } from "./db/seed";
+import { sites } from "./modules/sites";
 
 runMigrations();
 await seed();
@@ -49,10 +50,7 @@ const app = new Elysia()
       },
     },
   })
-  .get("/", () => "Hello Elysia")
-  .get("/sites", ({ user }) => "", { admin: true })
+  .use(sites)
   .listen(3001);
 
-console.log(
-  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,
-);
+console.log(`-> API is running at ${app.server?.hostname}:${app.server?.port}`);

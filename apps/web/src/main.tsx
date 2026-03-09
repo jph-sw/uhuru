@@ -2,6 +2,9 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 import { authClient } from "#/lib/auth-client";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 const router = createRouter({
   routeTree,
@@ -9,6 +12,7 @@ const router = createRouter({
   scrollRestoration: true,
   context: {
     auth: undefined,
+    queryClient,
   },
 });
 
@@ -36,5 +40,9 @@ const rootElement = document.getElementById("app")!;
 
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
-  root.render(<App />);
+  root.render(
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>,
+  );
 }

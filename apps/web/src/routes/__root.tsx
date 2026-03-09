@@ -5,11 +5,13 @@ import { ThemeProvider } from "#/hooks/theme";
 
 import "../styles.css";
 import type { authClient } from "#/lib/auth-client";
+import type { QueryClient } from "@tanstack/react-query";
 
 type AuthSession = typeof authClient.$Infer.Session;
 
 interface MyRouterContext {
   auth: AuthSession | null | undefined;
+  queryClient: QueryClient;
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({

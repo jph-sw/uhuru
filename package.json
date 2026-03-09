@@ -1,15 +1,15 @@
 {
   "name": "uhuru",
   "module": "index.ts",
-  "type": "module",
+  "devDependencies": {
+    "prettier": "^3.8.1"
+  },
   "scripts": {
     "dev": "bun run --parallel --workspaces dev"
   },
+  "type": "module",
   "workspaces": [
     "apps/*",
     "packages/*"
-  ],
-  "devDependencies": {
-    "prettier": "^3.8.1"
-  }
+  ]
 }
