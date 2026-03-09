@@ -14,7 +14,7 @@ function RouteComponent() {
       domain: "",
     },
     onSubmit: async ({ value }) => {
-      const res = await api("/sites", {
+      await api("/sites", {
         method: "POST",
         body: JSON.stringify(value),
       });

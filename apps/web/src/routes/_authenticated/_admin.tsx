@@ -4,7 +4,6 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from "#/components/ui/select";
 import { siteQueryOptions } from "#/data/query-options-sites";
 import { useQuery } from "@tanstack/react-query";
@@ -18,8 +17,6 @@ import {
 } from "@tanstack/react-router";
 import { PlusIcon } from "@phosphor-icons/react";
 import { type } from "arktype";
-import { useState } from "react";
-import { Route as SiteRoute } from "./_admin/admin.site.$site";
 import { authClient } from "#/lib/auth-client";
 import { ThemeToggle } from "#/components/theme-toggle";
 const search = type({
