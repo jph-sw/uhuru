@@ -16,9 +16,11 @@ import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/_admin'
 import { Route as AuthenticatedAdminDashRouteImport } from './routes/_authenticated/_admin/dash'
+import { Route as AuthJoinCodeIndexRouteImport } from './routes/auth/join.$code.index'
 import { Route as AuthenticatedAdminAdminIndexRouteImport } from './routes/_authenticated/_admin/admin.index'
 import { Route as AuthenticatedAdminAdminSiteNewRouteImport } from './routes/_authenticated/_admin/admin.site-new'
 import { Route as AuthenticatedAdminAdminSiteSiteIndexRouteImport } from './routes/_authenticated/_admin/admin.site.$site.index'
+import { Route as AuthenticatedAdminAdminSiteSiteUsersIndexRouteImport } from './routes/_authenticated/_admin/admin.site.$site.users.index'
 import { Route as AuthenticatedAdminAdminSiteSiteFieldsIndexRouteImport } from './routes/_authenticated/_admin/admin.site.$site.fields.index'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
@@ -54,6 +56,11 @@ const AuthenticatedAdminDashRoute = AuthenticatedAdminDashRouteImport.update({
   path: '/dash',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthJoinCodeIndexRoute = AuthJoinCodeIndexRouteImport.update({
+  id: '/auth/join/$code/',
+  path: '/auth/join/$code/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminAdminIndexRoute =
   AuthenticatedAdminAdminIndexRouteImport.update({
     id: '/admin/',
@@ -72,6 +79,12 @@ const AuthenticatedAdminAdminSiteSiteIndexRoute =
     path: '/admin/site/$site/',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminAdminSiteSiteUsersIndexRoute =
+  AuthenticatedAdminAdminSiteSiteUsersIndexRouteImport.update({
+    id: '/admin/site/$site/users/',
+    path: '/admin/site/$site/users/',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminAdminSiteSiteFieldsIndexRoute =
   AuthenticatedAdminAdminSiteSiteFieldsIndexRouteImport.update({
     id: '/admin/site/$site/fields/',
@@ -87,8 +100,10 @@ export interface FileRoutesByFullPath {
   '/dash': typeof AuthenticatedAdminDashRoute
   '/admin/site-new': typeof AuthenticatedAdminAdminSiteNewRoute
   '/admin/': typeof AuthenticatedAdminAdminIndexRoute
+  '/auth/join/$code/': typeof AuthJoinCodeIndexRoute
   '/admin/site/$site/': typeof AuthenticatedAdminAdminSiteSiteIndexRoute
   '/admin/site/$site/fields/': typeof AuthenticatedAdminAdminSiteSiteFieldsIndexRoute
+  '/admin/site/$site/users/': typeof AuthenticatedAdminAdminSiteSiteUsersIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -98,8 +113,10 @@ export interface FileRoutesByTo {
   '/dash': typeof AuthenticatedAdminDashRoute
   '/admin/site-new': typeof AuthenticatedAdminAdminSiteNewRoute
   '/admin': typeof AuthenticatedAdminAdminIndexRoute
+  '/auth/join/$code': typeof AuthJoinCodeIndexRoute
   '/admin/site/$site': typeof AuthenticatedAdminAdminSiteSiteIndexRoute
   '/admin/site/$site/fields': typeof AuthenticatedAdminAdminSiteSiteFieldsIndexRoute
+  '/admin/site/$site/users': typeof AuthenticatedAdminAdminSiteSiteUsersIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -112,8 +129,10 @@ export interface FileRoutesById {
   '/_authenticated/_admin/dash': typeof AuthenticatedAdminDashRoute
   '/_authenticated/_admin/admin/site-new': typeof AuthenticatedAdminAdminSiteNewRoute
   '/_authenticated/_admin/admin/': typeof AuthenticatedAdminAdminIndexRoute
+  '/auth/join/$code/': typeof AuthJoinCodeIndexRoute
   '/_authenticated/_admin/admin/site/$site/': typeof AuthenticatedAdminAdminSiteSiteIndexRoute
   '/_authenticated/_admin/admin/site/$site/fields/': typeof AuthenticatedAdminAdminSiteSiteFieldsIndexRoute
+  '/_authenticated/_admin/admin/site/$site/users/': typeof AuthenticatedAdminAdminSiteSiteUsersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -125,8 +144,10 @@ export interface FileRouteTypes {
     | '/dash'
     | '/admin/site-new'
     | '/admin/'
+    | '/auth/join/$code/'
     | '/admin/site/$site/'
     | '/admin/site/$site/fields/'
+    | '/admin/site/$site/users/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -136,8 +157,10 @@ export interface FileRouteTypes {
     | '/dash'
     | '/admin/site-new'
     | '/admin'
+    | '/auth/join/$code'
     | '/admin/site/$site'
     | '/admin/site/$site/fields'
+    | '/admin/site/$site/users'
   id:
     | '__root__'
     | '/'
@@ -149,8 +172,10 @@ export interface FileRouteTypes {
     | '/_authenticated/_admin/dash'
     | '/_authenticated/_admin/admin/site-new'
     | '/_authenticated/_admin/admin/'
+    | '/auth/join/$code/'
     | '/_authenticated/_admin/admin/site/$site/'
     | '/_authenticated/_admin/admin/site/$site/fields/'
+    | '/_authenticated/_admin/admin/site/$site/users/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -158,6 +183,7 @@ export interface RootRouteChildren {
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AuthSignInRoute: typeof AuthSignInRoute
   AuthSignUpRoute: typeof AuthSignUpRoute
+  AuthJoinCodeIndexRoute: typeof AuthJoinCodeIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -211,6 +237,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminDashRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/auth/join/$code/': {
+      id: '/auth/join/$code/'
+      path: '/auth/join/$code'
+      fullPath: '/auth/join/$code/'
+      preLoaderRoute: typeof AuthJoinCodeIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/_admin/admin/': {
       id: '/_authenticated/_admin/admin/'
       path: '/admin'
@@ -232,6 +265,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAdminSiteSiteIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/_admin/admin/site/$site/users/': {
+      id: '/_authenticated/_admin/admin/site/$site/users/'
+      path: '/admin/site/$site/users'
+      fullPath: '/admin/site/$site/users/'
+      preLoaderRoute: typeof AuthenticatedAdminAdminSiteSiteUsersIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/_admin/admin/site/$site/fields/': {
       id: '/_authenticated/_admin/admin/site/$site/fields/'
       path: '/admin/site/$site/fields'
@@ -248,6 +288,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAdminIndexRoute: typeof AuthenticatedAdminAdminIndexRoute
   AuthenticatedAdminAdminSiteSiteIndexRoute: typeof AuthenticatedAdminAdminSiteSiteIndexRoute
   AuthenticatedAdminAdminSiteSiteFieldsIndexRoute: typeof AuthenticatedAdminAdminSiteSiteFieldsIndexRoute
+  AuthenticatedAdminAdminSiteSiteUsersIndexRoute: typeof AuthenticatedAdminAdminSiteSiteUsersIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
@@ -258,6 +299,8 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
     AuthenticatedAdminAdminSiteSiteIndexRoute,
   AuthenticatedAdminAdminSiteSiteFieldsIndexRoute:
     AuthenticatedAdminAdminSiteSiteFieldsIndexRoute,
+  AuthenticatedAdminAdminSiteSiteUsersIndexRoute:
+    AuthenticatedAdminAdminSiteSiteUsersIndexRoute,
 }
 
 const AuthenticatedAdminRouteWithChildren =
@@ -282,6 +325,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AuthSignInRoute: AuthSignInRoute,
   AuthSignUpRoute: AuthSignUpRoute,
+  AuthJoinCodeIndexRoute: AuthJoinCodeIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,0 +1,1 @@
+ALTER TABLE `invite` ADD `site_id` text NOT NULL REFERENCES site(id);

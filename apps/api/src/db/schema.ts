@@ -17,6 +17,7 @@ export const user = sqliteTable("user", {
   banned: integer("banned", { mode: "boolean" }).default(false),
   banReason: text("ban_reason"),
   banExpires: integer("ban_expires", { mode: "timestamp_ms" }),
+  site_id: text("site_id"),
 });
 
 export const session = sqliteTable(
@@ -122,6 +123,29 @@ export const field = sqliteTable("field", {
   siteId: text("site_id")
     .notNull()
     .references(() => site.id),
+});
+
+export const invite = sqliteTable("invite", {
+  id: text("id").primaryKey(),
+  code: text("code").notNull(),
+  maxUses: text("max_uses").notNull().default("1"),
+  siteId: text("site_id")
+    .notNull()
+    .references(() => site.id),
+  createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
+  updatedAt: integer("updated_at", { mode: "timestamp_ms" })
+    .$onUpdate(() => new Date())
+    .notNull(),
+});
+
+export const inviteUse = sqliteTable("invite_use", {
+  id: text("id").primaryKey(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id),
+  inviteCode: text("invite_code")
+    .notNull()
+    .references(() => invite.code),
 });
 
 export const table = {

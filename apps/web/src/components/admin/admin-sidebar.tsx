@@ -10,7 +10,12 @@ import { authClient } from "#/lib/auth-client";
 import { ThemeToggle } from "#/components/theme-toggle";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useNavigate, useParams } from "@tanstack/react-router";
-import { GearIcon, PlusIcon, TextboxIcon } from "@phosphor-icons/react";
+import {
+  GearIcon,
+  PlusIcon,
+  TextboxIcon,
+  UsersIcon,
+} from "@phosphor-icons/react";
 import {
   Sidebar,
   SidebarContent,
@@ -79,6 +84,16 @@ export function AdminSidebar() {
                       params={{ site: site! }}
                     >
                       <TextboxIcon /> Fields
+                    </Link>
+                  }
+                />
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  disabled={!site}
+                  render={
+                    <Link to="/admin/site/$site/users" params={{ site: site! }}>
+                      <UsersIcon /> Users
                     </Link>
                   }
                 />

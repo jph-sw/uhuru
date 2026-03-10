@@ -13,8 +13,15 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  hooks: {
-    before: createAuthMiddleware(async (ctx) => {}),
+  user: {
+    additionalFields: {
+      site_id: {
+        type: "string",
+        required: false,
+        input: true,
+      },
+    },
   },
+
   plugins: [admin()],
 });
