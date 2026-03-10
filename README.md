@@ -57,6 +57,56 @@ Requires a `.env` file at the root — see `.env.example`.
 4. The client creates an account and can edit the content of their site
 5. The developer fetches content from the API and renders it on the website
 
+## Self-hosting
+
+**Requirements:** a server with Docker installed.
+
+### 1. Create a `docker-compose.yml`
+
+```yaml
+services:
+  app:
+    image: ghcr.io/jph-sw/uhuru:latest
+    ports:
+      - "3001:3001"
+    env_file:
+      - .env
+    volumes:
+      - db_data:/app/apps/api/data
+    restart: unless-stopped
+
+volumes:
+  db_data:
+```
+
+### 2. Create a `.env`
+
+```env
+BETTER_AUTH_SECRET=your-secret-key-min-32-chars
+BETTER_AUTH_URL=http://your-server-ip:3001
+
+ADMIN_NAME=Your Name
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=changeme
+```
+
+### 3. Start
+
+```bash
+docker compose up -d
+```
+
+Uhuru is now running at `http://your-server-ip:3001`.
+
+The database is stored in the `db_data` volume and persists across updates.
+
+### Updating
+
+```bash
+docker compose pull
+docker compose up -d
+```
+
 ## License
 
 MIT
