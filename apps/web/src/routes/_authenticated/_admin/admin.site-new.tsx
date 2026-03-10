@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
 import { useAppForm } from "#/hooks/form";
 import { api } from "#/lib/api";
 import { createFileRoute } from "@tanstack/react-router";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/_admin/admin/site-new")({
   component: RouteComponent,
@@ -9,15 +10,31 @@ export const Route = createFileRoute("/_authenticated/_admin/admin/site-new")({
 
 function RouteComponent() {
   const { queryClient } = Route.useRouteContext();
+  const navigate = Route.useNavigate();
+
   const form = useAppForm({
     defaultValues: {
       name: "",
       domain: "",
     },
     onSubmit: async ({ value }) => {
-      await api.sites.post({ name: value.name, domain: value.domain });
+      const res = await api.sites.post({
+        name: value.name,
+        domain: value.domain,
+      });
 
-      queryClient.invalidateQueries({ queryKey: ["sites"] });
+      if (res.error) {
+        form.setErrorMap({
+          onSubmit: {
+            fields: {},
+            form: res.error.value,
+          },
+        });
+      } else {
+        await queryClient.invalidateQueries({ queryKey: ["sites"] });
+        toast.success("Success", { description: `Created ${res.data.id}` });
+        navigate({ to: "/admin/site/$site", params: { site: res.data.id } });
+      }
     },
   });
   return (

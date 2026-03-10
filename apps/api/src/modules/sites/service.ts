@@ -15,8 +15,11 @@ export abstract class Sites {
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-|-$/g, "");
 
-    await db
+    const res = await db
       .insert(siteTable)
-      .values({ id, name, domain, createdAt: new Date() });
+      .values({ id, name, domain, createdAt: new Date() })
+      .returning();
+
+    return res[0];
   }
 }
