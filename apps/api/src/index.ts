@@ -13,10 +13,12 @@ import { users } from "./modules/users";
 runMigrations();
 await seed();
 
+const isProduction = process.env.NODE_ENV === "production";
+
 const app = new Elysia()
   .use(
     cors({
-      origin: "http://localhost:3000",
+      origin: isProduction ? false : "http://localhost:3000",
       methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
       credentials: true,
       allowedHeaders: ["Content-Type", "Authorization"],
@@ -28,8 +30,23 @@ const app = new Elysia()
   .use(fields)
   .use(invite)
   .use(join)
-  .use(users)
-  .listen({ port: 3001 });
+  .use(users);
+
+if (isProduction) {
+  // Serve static assets and SPA fallback from apps/api/public (populated during Docker build).
+  // .mount(auth.handler) registers an ALL /* handler; our GET /* wins for GET requests,
+  // so we must explicitly delegate unmatched /api/* paths back to the auth handler.
+  app.get("/*", async ({ path, request }) => {
+    if (path.startsWith("/api/")) return auth.handler(request);
+
+    const filePath = path === "/" ? "/index.html" : path;
+    const file = Bun.file(`public${filePath}`);
+    if (await file.exists()) return file;
+    return Bun.file("public/index.html");
+  });
+}
+
+app.listen({ port: 3001 });
 
 console.log(`-> API is running at ${app.server?.hostname}:${app.server?.port}`);
 
