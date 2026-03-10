@@ -1,10 +1,14 @@
+import { eq } from "drizzle-orm";
 import { db } from "../../db";
 import { field as fieldTable } from "../../db/schema";
 import { ulid } from "ulidx";
 
 export abstract class Fields {
-  static getFields() {
-    const sites = db.select().from(fieldTable).all();
+  static getFields({ siteId }: { siteId: string }) {
+    const sites = db
+      .select()
+      .from(fieldTable)
+      .where(eq(fieldTable.siteId, siteId));
 
     return sites;
   }

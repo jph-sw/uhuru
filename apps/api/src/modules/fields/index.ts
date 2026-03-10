@@ -3,9 +3,13 @@ import { Fields } from "./service";
 import { FieldsModel } from "./model";
 
 export const fields = new Elysia({ prefix: "fields" })
-  .get("/:siteId", () => Fields.getFields(), {
-    params: FieldsModel.selectFieldBody,
-  })
+  .get(
+    "/:siteId",
+    ({ params }) => Fields.getFields({ siteId: params.siteId }),
+    {
+      params: FieldsModel.selectFieldBody,
+    },
+  )
   .post(
     "/",
     ({ body }) =>
