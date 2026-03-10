@@ -9,6 +9,7 @@ import { fields } from "./modules/fields";
 import { invite } from "./modules/invite";
 import { join } from "./modules/join";
 import { users } from "./modules/users";
+import { content } from "./modules/content";
 
 runMigrations();
 await seed();
@@ -30,7 +31,8 @@ const app = new Elysia()
   .use(fields)
   .use(invite)
   .use(join)
-  .use(users);
+  .use(users)
+  .use(content);
 
 if (isProduction) {
   // Serve static assets and SPA fallback from apps/api/public (populated during Docker build).

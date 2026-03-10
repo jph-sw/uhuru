@@ -17,7 +17,8 @@ export const Route = createFileRoute("/_authenticated/_admin")({
       });
     } else if (context.auth.user.role !== "admin") {
       throw redirect({
-        to: "/dashboard",
+        to: "/dashboard/s/$site",
+        params: { site: context.auth.user.site_id! },
       });
     }
   },
