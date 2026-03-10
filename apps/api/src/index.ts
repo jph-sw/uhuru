@@ -19,7 +19,9 @@ const isProduction = process.env.NODE_ENV === "production";
 const app = new Elysia()
   .use(
     cors({
-      origin: isProduction ? false : "http://localhost:3000",
+      origin: isProduction
+        ? (process.env.TRUSTED_ORIGINS?.split(",") ?? false)
+        : "http://localhost:3000",
       methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
       credentials: true,
       allowedHeaders: ["Content-Type", "Authorization"],

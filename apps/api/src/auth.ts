@@ -7,7 +7,9 @@ import { db } from "./db";
 
 export const auth = betterAuth({
   baseURL: Bun.env.BETTER_AUTH_URL,
-  trustedOrigins: ["http://localhost:3000"],
+  trustedOrigins: Bun.env.TRUSTED_ORIGINS
+    ? Bun.env.TRUSTED_ORIGINS.split(",")
+    : ["http://localhost:3000"],
   database: drizzleAdapter(db, { provider: "sqlite" }),
   experimental: { joins: true },
   emailAndPassword: {
