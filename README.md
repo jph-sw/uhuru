@@ -20,11 +20,11 @@ Clients are invited by the developer and get access only to the site they belong
 
 ## Stack
 
-| Layer | Tech |
-|---|---|
+| Layer    | Tech                                                  |
+| -------- | ----------------------------------------------------- |
 | Frontend | React, Vite, TanStack Router/Query/Form, Tailwind CSS |
-| Backend | Elysia, Better Auth, Drizzle ORM, SQLite |
-| Runtime | Bun |
+| Backend  | Elysia, Better Auth, Drizzle ORM, SQLite              |
+| Runtime  | Bun                                                   |
 
 ## Structure
 
@@ -47,7 +47,7 @@ bun install
 bun run --parallel --workspaces dev
 ```
 
-Requires a `.env` file at the root — see `.env.example` (coming soon).
+Requires a `.env` file at the root — see `.env.example`.
 
 ## How it works
 

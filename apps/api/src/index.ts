@@ -17,19 +17,19 @@ const app = new Elysia()
   .use(
     cors({
       origin: "http://localhost:3000",
-      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
       credentials: true,
       allowedHeaders: ["Content-Type", "Authorization"],
     }),
   )
   .mount(auth.handler)
   .use(macros)
-  .use(sites, { admin: true })
+  .use(sites)
   .use(fields)
   .use(invite)
   .use(join)
   .use(users)
-  .listen(3001);
+  .listen({ port: 3001 });
 
 console.log(`-> API is running at ${app.server?.hostname}:${app.server?.port}`);
 

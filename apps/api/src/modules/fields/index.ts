@@ -8,7 +8,7 @@ export const fields = new Elysia({ prefix: "fields" })
   .guard({ admin: true }, (app) =>
     app
       .get(
-        "/:siteId",
+        "/site/:siteId",
         ({ params }) => Fields.getFields({ siteId: params.siteId }),
         {
           params: FieldsModel.selectFieldBody,
@@ -23,5 +23,11 @@ export const fields = new Elysia({ prefix: "fields" })
             siteId: body.siteId,
           }),
         { body: FieldsModel.createFieldBody },
+      )
+      .patch(
+        "/:id",
+        ({ params, body }) =>
+          Fields.updateField({ id: params.id, content: body.content }),
+        { params: FieldsModel.updateFieldParams, body: FieldsModel.updateFieldBody },
       ),
   );

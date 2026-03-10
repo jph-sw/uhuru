@@ -13,6 +13,13 @@ export abstract class Fields {
     return sites;
   }
 
+  static async updateField({ id, content }: { id: string; content: string }) {
+    await db
+      .update(fieldTable)
+      .set({ content })
+      .where(eq(fieldTable.id, id));
+  }
+
   static async createField({
     key,
     content,
