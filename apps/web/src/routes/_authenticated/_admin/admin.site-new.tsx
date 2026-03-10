@@ -8,6 +8,7 @@ export const Route = createFileRoute("/_authenticated/_admin/admin/site-new")({
 });
 
 function RouteComponent() {
+  const { queryClient } = Route.useRouteContext();
   const form = useAppForm({
     defaultValues: {
       name: "",
@@ -15,6 +16,8 @@ function RouteComponent() {
     },
     onSubmit: async ({ value }) => {
       await api.sites.post({ name: value.name, domain: value.domain });
+
+      queryClient.invalidateQueries({ queryKey: ["sites"] });
     },
   });
   return (
