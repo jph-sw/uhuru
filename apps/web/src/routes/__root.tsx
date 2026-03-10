@@ -1,5 +1,7 @@
 import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
+
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { ThemeProvider } from "#/hooks/theme";
 
@@ -30,6 +32,10 @@ function RootComponent() {
           {
             name: "TanStack Router",
             render: <TanStackRouterDevtoolsPanel />,
+          },
+          {
+            name: "TanStack Query",
+            render: <ReactQueryDevtoolsPanel />,
           },
         ]}
       />
