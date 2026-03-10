@@ -1,5 +1,6 @@
 import { db } from "../../db";
 import { site as siteTable } from "../../db/schema";
+
 export abstract class Sites {
   static getSites() {
     const sites = db.select().from(siteTable).all();

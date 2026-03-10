@@ -113,7 +113,20 @@ export const site = sqliteTable("site", {
 
 export const field = sqliteTable("field", {
   id: text("id").primaryKey(),
-  key: text("key").unique(),
-  content: text("content"),
-  siteId: text("site_id").references(() => site.id),
+  key: text("key").notNull().unique(),
+  content: text("content").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
+  updatedAt: integer("updated_at", { mode: "timestamp_ms" })
+    .$onUpdate(() => new Date())
+    .notNull(),
+  siteId: text("site_id")
+    .notNull()
+    .references(() => site.id),
 });
+
+export const table = {
+  site,
+  field,
+  user,
+  session,
+} as const;

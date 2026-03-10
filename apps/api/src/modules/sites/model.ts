@@ -1,8 +1,9 @@
-import { t, type UnwrapSchema } from "elysia";
+import { t } from "elysia";
+import { site as siteTable } from "../../db/schema";
+import { spread } from "../../db/utils";
+
+const { name, domain } = spread(siteTable, "insert");
 
 export const SitesModel = {
-  createSiteBody: t.Object({
-    name: t.String(),
-    domain: t.String(),
-  }),
-} as const;
+  createSiteBody: t.Object({ name, domain }),
+};

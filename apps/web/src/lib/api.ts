@@ -1,18 +1,6 @@
-const BASE_URL = "http://localhost:3001";
+import { treaty } from "@elysiajs/eden";
+import type { App } from "@uhuru/api";
 
-export async function api<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${BASE_URL}${path}`, {
-    ...init,
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      ...init?.headers,
-    },
-  });
-
-  if (!res.ok) {
-    throw new Error(`${res.status} ${res.statusText}`);
-  }
-
-  return res.json() as Promise<T>;
-}
+export const api = treaty<App>("http://localhost:3001", {
+  fetch: { credentials: "include" },
+});

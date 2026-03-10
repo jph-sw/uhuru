@@ -14,10 +14,7 @@ function RouteComponent() {
       domain: "",
     },
     onSubmit: async ({ value }) => {
-      await api("/sites", {
-        method: "POST",
-        body: JSON.stringify(value),
-      });
+      await api.sites.post({ name: value.name, domain: value.domain });
     },
   });
   return (

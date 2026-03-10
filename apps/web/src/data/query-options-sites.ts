@@ -1,8 +1,11 @@
 import { queryOptions } from "@tanstack/react-query";
-import { type Site } from "@uhuru/types";
 import { api } from "#/lib/api";
 
 export const siteQueryOptions = queryOptions({
   queryKey: ["sites"],
-  queryFn: () => api<Site[]>("/sites"),
+  queryFn: async () => {
+    const { data, error } = await api.sites.get();
+    if (error) throw error;
+    return data;
+  },
 });

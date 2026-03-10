@@ -4,6 +4,7 @@ import { auth } from "./auth";
 import { runMigrations } from "./db/migrate";
 import { seed } from "./db/seed";
 import { sites } from "./modules/sites";
+import { fields } from "./modules/fields";
 
 runMigrations();
 await seed();
@@ -51,6 +52,9 @@ const app = new Elysia()
     },
   })
   .use(sites)
+  .use(fields)
   .listen(3001);
 
 console.log(`-> API is running at ${app.server?.hostname}:${app.server?.port}`);
+
+export type App = typeof app;
