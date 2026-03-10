@@ -56,4 +56,13 @@ export abstract class Invite {
       return { valid: true, invite: res[0] };
     }
   }
+
+  static async getInviteBySiteId({ siteId }: { siteId: string }) {
+    const res = await db
+      .select()
+      .from(inviteTable)
+      .where(eq(inviteTable.siteId, siteId));
+
+    return res;
+  }
 }

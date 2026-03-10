@@ -20,6 +20,10 @@ import {
 } from "#/components/ui/input-group";
 import { CheckIcon } from "@phosphor-icons/react";
 import { CopyIcon } from "@phosphor-icons/react/dist/ssr";
+import { useQuery } from "@tanstack/react-query";
+import { inviteQueryOptions } from "#/data/query-options-invites";
+import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
+import { InvitesTable } from "#/components/admin/invites-table";
 
 export const Route = createFileRoute(
   "/_authenticated/_admin/admin/site/$site/invites/",
@@ -32,6 +36,8 @@ function RouteComponent() {
 
   const { copyToClipboard, isCopied } = useCopyToClipboard();
   const [inviteCode, setInviteCode] = useState<string | undefined>("");
+
+  const { data: invites } = useQuery(inviteQueryOptions({ siteId: site }));
 
   const form = useAppForm({
     defaultValues: {
@@ -58,55 +64,67 @@ function RouteComponent() {
 
   return (
     <div>
-      <Dialog>
-        <DialogTrigger render={<Button>Invite user</Button>} />
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Create invite</DialogTitle>
-          </DialogHeader>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              form.handleSubmit();
-            }}
-          >
-            <form.AppField
-              name="maxUses"
-              children={(field) => <field.TextField label="Max uses" />}
-            />
-            <form.AppForm>
-              <form.SubscribeButton label="Create invite" />
-              <form.ErrorMap />
-            </form.AppForm>
+      <Card className="max-w-5xl">
+        <CardHeader>
+          <CardTitle>Invites</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Dialog>
+            <DialogTrigger render={<Button>Invite user</Button>} />
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>
+                  Create invite for <code className="text-xs">{site}</code>
+                </DialogTitle>
+              </DialogHeader>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  form.handleSubmit();
+                }}
+              >
+                <form.AppField
+                  name="maxUses"
+                  children={(field) => (
+                    <field.TextField label="Max uses" type="number" />
+                  )}
+                />
+                <form.AppForm>
+                  <form.SubscribeButton label="Create invite" />
+                  <form.ErrorMap />
+                </form.AppForm>
 
-            {inviteCode && (
-              <Alert>
-                <AlertTitle>Success!</AlertTitle>
-                <AlertDescription className="mb-1">
-                  Your invite code
-                </AlertDescription>
-                <InputGroup>
-                  <InputGroupInput value={inviteCode} readOnly />
-                  <InputGroupAddon align="inline-end">
-                    <InputGroupButton
-                      aria-label="Copy"
-                      title="Copy"
-                      size="icon-xs"
-                      onClick={() => {
-                        copyToClipboard(
-                          "http://localhost:3000/auth/join/" + inviteCode,
-                        );
-                      }}
-                    >
-                      {isCopied ? <CheckIcon /> : <CopyIcon />}
-                    </InputGroupButton>
-                  </InputGroupAddon>
-                </InputGroup>
-              </Alert>
-            )}
-          </form>
-        </DialogContent>
-      </Dialog>
+                {inviteCode && (
+                  <Alert>
+                    <AlertTitle>Success!</AlertTitle>
+                    <AlertDescription className="mb-1">
+                      Your invite code
+                    </AlertDescription>
+                    <InputGroup>
+                      <InputGroupInput value={inviteCode} readOnly />
+                      <InputGroupAddon align="inline-end">
+                        <InputGroupButton
+                          aria-label="Copy"
+                          title="Copy"
+                          size="icon-xs"
+                          onClick={() => {
+                            copyToClipboard(
+                              "http://localhost:3000/auth/join/" + inviteCode,
+                            );
+                          }}
+                        >
+                          {isCopied ? <CheckIcon /> : <CopyIcon />}
+                        </InputGroupButton>
+                      </InputGroupAddon>
+                    </InputGroup>
+                  </Alert>
+                )}
+              </form>
+            </DialogContent>
+          </Dialog>
+          <InvitesTable invites={invites} />
+        </CardContent>
+      </Card>
     </div>
   );
 }

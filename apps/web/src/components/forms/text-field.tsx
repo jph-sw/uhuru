@@ -5,9 +5,13 @@ import { Input } from "#/components/ui/input";
 export default function TextField({
   label,
   type,
+  readOnly = false,
+  disabled = false,
 }: {
   label: string;
   type?: string;
+  readOnly?: boolean;
+  disabled?: boolean;
 }) {
   const field = useFieldContext<string>();
 
@@ -22,6 +26,8 @@ export default function TextField({
           type={type}
           onChange={(e) => field.handleChange(e.target.value)}
           onBlur={field.handleBlur}
+          readOnly={readOnly}
+          disabled={disabled}
         />
       </label>
       {errors.map((error: string) => (

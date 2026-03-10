@@ -7,6 +7,7 @@ const { code, maxUses, siteId } = spread(inviteTable, "insert");
 export const InviteModel = {
   createInviteBody: t.Object({ maxUses, siteId }),
   selectInviteBody: t.Object({ code }),
+  selectInviteBySiteBody: t.Object({ siteId }),
   invite: t.Object(spread(inviteTable, "select")),
   codeInvalid: t.Object({ code: t.String(), message: t.String() }),
   codeValid: t.Object({ code: t.String() }),

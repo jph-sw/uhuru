@@ -3,6 +3,14 @@ import { Invite } from "./service";
 import { InviteModel } from "./model";
 
 export const invite = new Elysia({ prefix: "invite" })
+  .get(
+    "/site/:siteId",
+    ({ params }) => Invite.getInviteBySiteId({ siteId: params.siteId }),
+    {
+      params: InviteModel.selectInviteBySiteBody,
+      response: t.Array(InviteModel.invite),
+    },
+  )
   .get("/:code", ({ params }) => Invite.getInvite({ code: params.code }), {
     params: InviteModel.selectInviteBody,
   })
