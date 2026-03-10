@@ -23,7 +23,11 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 function RootComponent() {
   return (
     <ThemeProvider>
-      <Outlet />
+      <div id="root-content">
+        <Outlet />
+      </div>
+      <div id="portal-root"></div>
+
       <TanStackDevtools
         config={{
           position: "bottom-right",

@@ -15,6 +15,7 @@ import {
   PlusIcon,
   TextboxIcon,
   UsersIcon,
+  EnvelopeIcon,
 } from "@phosphor-icons/react";
 import {
   Sidebar,
@@ -94,6 +95,19 @@ export function AdminSidebar() {
                   render={
                     <Link to="/admin/site/$site/users" params={{ site: site! }}>
                       <UsersIcon /> Users
+                    </Link>
+                  }
+                />
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  disabled={!site}
+                  render={
+                    <Link
+                      to="/admin/site/$site/invites"
+                      params={{ site: site! }}
+                    >
+                      <EnvelopeIcon /> Invites
                     </Link>
                   }
                 />

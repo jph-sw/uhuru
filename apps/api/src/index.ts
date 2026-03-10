@@ -7,6 +7,7 @@ import { sites } from "./modules/sites";
 import { fields } from "./modules/fields";
 import { invite } from "./modules/invite";
 import { join } from "./modules/join";
+import { users } from "./modules/users";
 
 runMigrations();
 await seed();
@@ -57,6 +58,7 @@ const app = new Elysia()
   .use(fields)
   .use(invite)
   .use(join)
+  .use(users)
   .listen(3001);
 
 console.log(`-> API is running at ${app.server?.hostname}:${app.server?.port}`);

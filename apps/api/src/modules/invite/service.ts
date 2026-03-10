@@ -49,7 +49,7 @@ export abstract class Invite {
         .from(inviteUseTable)
         .where(eq(inviteUseTable.inviteCode, res[0].code));
 
-      if (uses.length >= 1) {
+      if (uses.length >= Number(res[0].maxUses)) {
         return { valid: false };
       }
 

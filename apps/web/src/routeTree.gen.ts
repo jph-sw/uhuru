@@ -21,6 +21,7 @@ import { Route as AuthenticatedAdminAdminIndexRouteImport } from './routes/_auth
 import { Route as AuthenticatedAdminAdminSiteNewRouteImport } from './routes/_authenticated/_admin/admin.site-new'
 import { Route as AuthenticatedAdminAdminSiteSiteIndexRouteImport } from './routes/_authenticated/_admin/admin.site.$site.index'
 import { Route as AuthenticatedAdminAdminSiteSiteUsersIndexRouteImport } from './routes/_authenticated/_admin/admin.site.$site.users.index'
+import { Route as AuthenticatedAdminAdminSiteSiteInvitesIndexRouteImport } from './routes/_authenticated/_admin/admin.site.$site.invites.index'
 import { Route as AuthenticatedAdminAdminSiteSiteFieldsIndexRouteImport } from './routes/_authenticated/_admin/admin.site.$site.fields.index'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
@@ -85,6 +86,12 @@ const AuthenticatedAdminAdminSiteSiteUsersIndexRoute =
     path: '/admin/site/$site/users/',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminAdminSiteSiteInvitesIndexRoute =
+  AuthenticatedAdminAdminSiteSiteInvitesIndexRouteImport.update({
+    id: '/admin/site/$site/invites/',
+    path: '/admin/site/$site/invites/',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminAdminSiteSiteFieldsIndexRoute =
   AuthenticatedAdminAdminSiteSiteFieldsIndexRouteImport.update({
     id: '/admin/site/$site/fields/',
@@ -103,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/auth/join/$code/': typeof AuthJoinCodeIndexRoute
   '/admin/site/$site/': typeof AuthenticatedAdminAdminSiteSiteIndexRoute
   '/admin/site/$site/fields/': typeof AuthenticatedAdminAdminSiteSiteFieldsIndexRoute
+  '/admin/site/$site/invites/': typeof AuthenticatedAdminAdminSiteSiteInvitesIndexRoute
   '/admin/site/$site/users/': typeof AuthenticatedAdminAdminSiteSiteUsersIndexRoute
 }
 export interface FileRoutesByTo {
@@ -116,6 +124,7 @@ export interface FileRoutesByTo {
   '/auth/join/$code': typeof AuthJoinCodeIndexRoute
   '/admin/site/$site': typeof AuthenticatedAdminAdminSiteSiteIndexRoute
   '/admin/site/$site/fields': typeof AuthenticatedAdminAdminSiteSiteFieldsIndexRoute
+  '/admin/site/$site/invites': typeof AuthenticatedAdminAdminSiteSiteInvitesIndexRoute
   '/admin/site/$site/users': typeof AuthenticatedAdminAdminSiteSiteUsersIndexRoute
 }
 export interface FileRoutesById {
@@ -132,6 +141,7 @@ export interface FileRoutesById {
   '/auth/join/$code/': typeof AuthJoinCodeIndexRoute
   '/_authenticated/_admin/admin/site/$site/': typeof AuthenticatedAdminAdminSiteSiteIndexRoute
   '/_authenticated/_admin/admin/site/$site/fields/': typeof AuthenticatedAdminAdminSiteSiteFieldsIndexRoute
+  '/_authenticated/_admin/admin/site/$site/invites/': typeof AuthenticatedAdminAdminSiteSiteInvitesIndexRoute
   '/_authenticated/_admin/admin/site/$site/users/': typeof AuthenticatedAdminAdminSiteSiteUsersIndexRoute
 }
 export interface FileRouteTypes {
@@ -147,6 +157,7 @@ export interface FileRouteTypes {
     | '/auth/join/$code/'
     | '/admin/site/$site/'
     | '/admin/site/$site/fields/'
+    | '/admin/site/$site/invites/'
     | '/admin/site/$site/users/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/auth/join/$code'
     | '/admin/site/$site'
     | '/admin/site/$site/fields'
+    | '/admin/site/$site/invites'
     | '/admin/site/$site/users'
   id:
     | '__root__'
@@ -175,6 +187,7 @@ export interface FileRouteTypes {
     | '/auth/join/$code/'
     | '/_authenticated/_admin/admin/site/$site/'
     | '/_authenticated/_admin/admin/site/$site/fields/'
+    | '/_authenticated/_admin/admin/site/$site/invites/'
     | '/_authenticated/_admin/admin/site/$site/users/'
   fileRoutesById: FileRoutesById
 }
@@ -272,6 +285,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAdminSiteSiteUsersIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/_admin/admin/site/$site/invites/': {
+      id: '/_authenticated/_admin/admin/site/$site/invites/'
+      path: '/admin/site/$site/invites'
+      fullPath: '/admin/site/$site/invites/'
+      preLoaderRoute: typeof AuthenticatedAdminAdminSiteSiteInvitesIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/_admin/admin/site/$site/fields/': {
       id: '/_authenticated/_admin/admin/site/$site/fields/'
       path: '/admin/site/$site/fields'
@@ -288,6 +308,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAdminIndexRoute: typeof AuthenticatedAdminAdminIndexRoute
   AuthenticatedAdminAdminSiteSiteIndexRoute: typeof AuthenticatedAdminAdminSiteSiteIndexRoute
   AuthenticatedAdminAdminSiteSiteFieldsIndexRoute: typeof AuthenticatedAdminAdminSiteSiteFieldsIndexRoute
+  AuthenticatedAdminAdminSiteSiteInvitesIndexRoute: typeof AuthenticatedAdminAdminSiteSiteInvitesIndexRoute
   AuthenticatedAdminAdminSiteSiteUsersIndexRoute: typeof AuthenticatedAdminAdminSiteSiteUsersIndexRoute
 }
 
@@ -299,6 +320,8 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
     AuthenticatedAdminAdminSiteSiteIndexRoute,
   AuthenticatedAdminAdminSiteSiteFieldsIndexRoute:
     AuthenticatedAdminAdminSiteSiteFieldsIndexRoute,
+  AuthenticatedAdminAdminSiteSiteInvitesIndexRoute:
+    AuthenticatedAdminAdminSiteSiteInvitesIndexRoute,
   AuthenticatedAdminAdminSiteSiteUsersIndexRoute:
     AuthenticatedAdminAdminSiteSiteUsersIndexRoute,
 }
