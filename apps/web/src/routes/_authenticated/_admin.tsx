@@ -1,24 +1,8 @@
-import { Button } from "#/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-} from "#/components/ui/select";
-import { siteQueryOptions } from "#/data/query-options-sites";
-import { useQuery } from "@tanstack/react-query";
-import {
-  createFileRoute,
-  Link,
-  Outlet,
-  redirect,
-  useNavigate,
-  useParams,
-} from "@tanstack/react-router";
-import { PlusIcon } from "@phosphor-icons/react";
+import { AdminSidebar } from "#/components/admin/admin-sidebar";
+import { SidebarProvider } from "#/components/ui/sidebar";
+import { TooltipProvider } from "#/components/ui/tooltip";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { type } from "arktype";
-import { authClient } from "#/lib/auth-client";
-import { ThemeToggle } from "#/components/theme-toggle";
 const search = type({
   "site?": "string",
 });
@@ -40,69 +24,16 @@ export const Route = createFileRoute("/_authenticated/_admin")({
 });
 
 function RouteComponent() {
-  const { data: sites } = useQuery(siteQueryOptions);
-  const navigate = useNavigate();
-  const { site } = useParams({ strict: false });
-
   return (
     <div className="flex">
-      <div
-        className="h-dvh w-75 border-e p-2 flex flex-col justify-between"
-        id="sidebar"
-      >
-        <div>
-          <div className="flex items-center gap-1">
-            <Select
-              disabled={sites ? (sites.length <= 0 ? true : false) : true}
-              value={site}
-              onValueChange={(e) => {
-                navigate({
-                  from: Route.fullPath,
-                  to: "/admin/site/$site",
-                  params: { site: e as string },
-                });
-              }}
-            >
-              <SelectTrigger className={"min-h-12 w-full"}>
-                {sites && site
-                  ? sites.filter((item) => item.id === site)[0].name
-                  : "No sites"}
-              </SelectTrigger>
-              <SelectContent>
-                {sites?.map((site) => (
-                  <SelectItem key={site.id} value={site.id}>
-                    {site.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Button
-              variant={"secondary"}
-              className={"h-12"}
-              render={
-                <Link to="/admin/site-new">
-                  <PlusIcon />
-                </Link>
-              }
-            />
+      <TooltipProvider>
+        <SidebarProvider>
+          <AdminSidebar />
+          <div className="p-8 w-full min-h-full">
+            <Outlet />
           </div>
-        </div>
-        <div className="py-2 flex gap-2 border-t bottom-0">
-          <Button
-            variant={"outline"}
-            onClick={() => {
-              authClient.signOut();
-              navigate({ to: "/auth/sign-in" });
-            }}
-          >
-            Sign out
-          </Button>
-          <ThemeToggle />
-        </div>
-      </div>
-      <div className="p-8 w-full min-h-full">
-        <Outlet />
-      </div>
+        </SidebarProvider>
+      </TooltipProvider>
     </div>
   );
 }

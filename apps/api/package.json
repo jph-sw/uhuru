@@ -2,8 +2,7 @@
   "name": "api",
   "version": "1.0.50",
   "scripts": {
-    "dev": "bun run --env-file=../../.env --watch src/index.ts",
-    "db:migrate": "bunx --bun --env-file=../../.env auth@latest migrate"
+    "dev": "bun run --env-file=../../.env --watch src/index.ts"
   },
   "dependencies": {
     "@elysiajs/cors": "^1.4.1",

@@ -110,3 +110,10 @@ export const site = sqliteTable("site", {
     .$onUpdate(() => new Date())
     .notNull(),
 });
+
+export const field = sqliteTable("field", {
+  id: text("id").primaryKey(),
+  key: text("key").unique(),
+  content: text("content"),
+  siteId: text("site_id").references(() => site.id),
+});

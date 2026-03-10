@@ -1,7 +1,5 @@
 import { db } from "../../db";
 import { site as siteTable } from "../../db/schema";
-import { ulid } from "ulidx";
-
 export abstract class Sites {
   static getSites() {
     const sites = db.select().from(siteTable).all();
@@ -10,9 +8,14 @@ export abstract class Sites {
   }
 
   static async createSite({ name, domain }: { name: string; domain: string }) {
-    console.log("Creating Site");
+    const id = name
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
+
     await db
       .insert(siteTable)
-      .values({ id: ulid(), name, domain, createdAt: new Date() });
+      .values({ id, name, domain, createdAt: new Date() });
   }
 }
