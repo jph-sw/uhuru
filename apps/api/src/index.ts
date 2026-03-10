@@ -1,6 +1,7 @@
 import { Elysia } from "elysia";
 import { cors } from "@elysiajs/cors";
 import { auth } from "./auth";
+import { macros } from "./macros";
 import { runMigrations } from "./db/migrate";
 import { seed } from "./db/seed";
 import { sites } from "./modules/sites";
@@ -22,39 +23,8 @@ const app = new Elysia()
     }),
   )
   .mount(auth.handler)
-  .macro({
-    auth: {
-      async resolve({ status, request: { headers } }) {
-        const session = await auth.api.getSession({
-          headers,
-        });
-
-        if (!session) return status(401);
-
-        return {
-          user: session.user,
-          session: session.session,
-        };
-      },
-    },
-    admin: {
-      async resolve({ status, request: { headers } }) {
-        const session = await auth.api.getSession({
-          headers,
-        });
-
-        if (!session) return status(401);
-
-        if (session.user.role !== "admin") return status(403);
-
-        return {
-          user: session.user,
-          session: session.session,
-        };
-      },
-    },
-  })
-  .use(sites)
+  .use(macros)
+  .use(sites, { admin: true })
   .use(fields)
   .use(invite)
   .use(join)
