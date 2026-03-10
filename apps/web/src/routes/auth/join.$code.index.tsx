@@ -61,7 +61,10 @@ function RouteComponent() {
             },
           });
         } else {
-          navigate({ to: "/dashboard" });
+          navigate({
+            to: "/dashboard/s/$site",
+            params: { site: invite.siteId },
+          });
         }
       }
     },

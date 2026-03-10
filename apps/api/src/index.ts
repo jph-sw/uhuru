@@ -64,3 +64,4 @@ const app = new Elysia()
 console.log(`-> API is running at ${app.server?.hostname}:${app.server?.port}`);
 
 export type App = typeof app;
+export type Auth = typeof auth;

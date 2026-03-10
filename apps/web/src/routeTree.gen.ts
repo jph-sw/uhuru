@@ -13,12 +13,12 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthSignUpRouteImport } from './routes/auth/sign-up'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
-import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/_admin'
 import { Route as AuthenticatedAdminDashRouteImport } from './routes/_authenticated/_admin/dash'
 import { Route as AuthJoinCodeIndexRouteImport } from './routes/auth/join.$code.index'
 import { Route as AuthenticatedAdminAdminIndexRouteImport } from './routes/_authenticated/_admin/admin.index'
 import { Route as AuthenticatedAdminAdminSiteNewRouteImport } from './routes/_authenticated/_admin/admin.site-new'
+import { Route as AuthenticatedDashboardSSiteIndexRouteImport } from './routes/_authenticated/dashboard.s.$site.index'
 import { Route as AuthenticatedAdminAdminSiteSiteIndexRouteImport } from './routes/_authenticated/_admin/admin.site.$site.index'
 import { Route as AuthenticatedAdminAdminSiteSiteUsersIndexRouteImport } from './routes/_authenticated/_admin/admin.site.$site.users.index'
 import { Route as AuthenticatedAdminAdminSiteSiteInvitesIndexRouteImport } from './routes/_authenticated/_admin/admin.site.$site.invites.index'
@@ -42,11 +42,6 @@ const AuthSignInRoute = AuthSignInRouteImport.update({
   id: '/auth/sign-in',
   path: '/auth/sign-in',
   getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/_admin',
@@ -73,6 +68,12 @@ const AuthenticatedAdminAdminSiteNewRoute =
     id: '/admin/site-new',
     path: '/admin/site-new',
     getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedDashboardSSiteIndexRoute =
+  AuthenticatedDashboardSSiteIndexRouteImport.update({
+    id: '/dashboard/s/$site/',
+    path: '/dashboard/s/$site/',
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedAdminAdminSiteSiteIndexRoute =
   AuthenticatedAdminAdminSiteSiteIndexRouteImport.update({
@@ -101,13 +102,13 @@ const AuthenticatedAdminAdminSiteSiteFieldsIndexRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/dash': typeof AuthenticatedAdminDashRoute
   '/admin/site-new': typeof AuthenticatedAdminAdminSiteNewRoute
   '/admin/': typeof AuthenticatedAdminAdminIndexRoute
   '/auth/join/$code/': typeof AuthJoinCodeIndexRoute
+  '/dashboard/s/$site/': typeof AuthenticatedDashboardSSiteIndexRoute
   '/admin/site/$site/': typeof AuthenticatedAdminAdminSiteSiteIndexRoute
   '/admin/site/$site/fields/': typeof AuthenticatedAdminAdminSiteSiteFieldsIndexRoute
   '/admin/site/$site/invites/': typeof AuthenticatedAdminAdminSiteSiteInvitesIndexRoute
@@ -115,13 +116,13 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/dash': typeof AuthenticatedAdminDashRoute
   '/admin/site-new': typeof AuthenticatedAdminAdminSiteNewRoute
   '/admin': typeof AuthenticatedAdminAdminIndexRoute
   '/auth/join/$code': typeof AuthJoinCodeIndexRoute
+  '/dashboard/s/$site': typeof AuthenticatedDashboardSSiteIndexRoute
   '/admin/site/$site': typeof AuthenticatedAdminAdminSiteSiteIndexRoute
   '/admin/site/$site/fields': typeof AuthenticatedAdminAdminSiteSiteFieldsIndexRoute
   '/admin/site/$site/invites': typeof AuthenticatedAdminAdminSiteSiteInvitesIndexRoute
@@ -132,13 +133,13 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/_authenticated/_admin': typeof AuthenticatedAdminRouteWithChildren
-  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/_authenticated/_admin/dash': typeof AuthenticatedAdminDashRoute
   '/_authenticated/_admin/admin/site-new': typeof AuthenticatedAdminAdminSiteNewRoute
   '/_authenticated/_admin/admin/': typeof AuthenticatedAdminAdminIndexRoute
   '/auth/join/$code/': typeof AuthJoinCodeIndexRoute
+  '/_authenticated/dashboard/s/$site/': typeof AuthenticatedDashboardSSiteIndexRoute
   '/_authenticated/_admin/admin/site/$site/': typeof AuthenticatedAdminAdminSiteSiteIndexRoute
   '/_authenticated/_admin/admin/site/$site/fields/': typeof AuthenticatedAdminAdminSiteSiteFieldsIndexRoute
   '/_authenticated/_admin/admin/site/$site/invites/': typeof AuthenticatedAdminAdminSiteSiteInvitesIndexRoute
@@ -148,13 +149,13 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/dashboard'
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/dash'
     | '/admin/site-new'
     | '/admin/'
     | '/auth/join/$code/'
+    | '/dashboard/s/$site/'
     | '/admin/site/$site/'
     | '/admin/site/$site/fields/'
     | '/admin/site/$site/invites/'
@@ -162,13 +163,13 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/dashboard'
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/dash'
     | '/admin/site-new'
     | '/admin'
     | '/auth/join/$code'
+    | '/dashboard/s/$site'
     | '/admin/site/$site'
     | '/admin/site/$site/fields'
     | '/admin/site/$site/invites'
@@ -178,13 +179,13 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/_authenticated/_admin'
-    | '/_authenticated/dashboard'
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/_authenticated/_admin/dash'
     | '/_authenticated/_admin/admin/site-new'
     | '/_authenticated/_admin/admin/'
     | '/auth/join/$code/'
+    | '/_authenticated/dashboard/s/$site/'
     | '/_authenticated/_admin/admin/site/$site/'
     | '/_authenticated/_admin/admin/site/$site/fields/'
     | '/_authenticated/_admin/admin/site/$site/invites/'
@@ -229,13 +230,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignInRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/dashboard': {
-      id: '/_authenticated/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
     '/_authenticated/_admin': {
       id: '/_authenticated/_admin'
       path: ''
@@ -270,6 +264,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/site-new'
       preLoaderRoute: typeof AuthenticatedAdminAdminSiteNewRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/dashboard/s/$site/': {
+      id: '/_authenticated/dashboard/s/$site/'
+      path: '/dashboard/s/$site'
+      fullPath: '/dashboard/s/$site/'
+      preLoaderRoute: typeof AuthenticatedDashboardSSiteIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/_admin/admin/site/$site/': {
       id: '/_authenticated/_admin/admin/site/$site/'
@@ -331,12 +332,12 @@ const AuthenticatedAdminRouteWithChildren =
 
 interface AuthenticatedRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
-  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedDashboardSSiteIndexRoute: typeof AuthenticatedDashboardSSiteIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
-  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedDashboardSSiteIndexRoute: AuthenticatedDashboardSSiteIndexRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(

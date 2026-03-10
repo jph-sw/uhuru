@@ -1,7 +1,11 @@
-export type Site = {
-  id: string;
-  name: string;
-  domain: string;
-  created_at: number;
-  updated_at: number;
+export type AuthConfig = {
+  user: {
+    additionalFields: {
+      site_id: {
+        type: "string";
+        required: false;
+        input: true;
+      };
+    };
+  };
 };
