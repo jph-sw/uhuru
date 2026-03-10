@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthSignUpRouteImport } from './routes/auth/sign-up'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/_admin'
 import { Route as AuthenticatedAdminDashRouteImport } from './routes/_authenticated/_admin/dash'
@@ -31,11 +30,6 @@ const AuthenticatedRoute = AuthenticatedRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthSignUpRoute = AuthSignUpRouteImport.update({
-  id: '/auth/sign-up',
-  path: '/auth/sign-up',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthSignInRoute = AuthSignInRouteImport.update({
@@ -103,7 +97,6 @@ const AuthenticatedAdminAdminSiteSiteFieldsIndexRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth/sign-in': typeof AuthSignInRoute
-  '/auth/sign-up': typeof AuthSignUpRoute
   '/dash': typeof AuthenticatedAdminDashRoute
   '/admin/site-new': typeof AuthenticatedAdminAdminSiteNewRoute
   '/admin/': typeof AuthenticatedAdminAdminIndexRoute
@@ -117,7 +110,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth/sign-in': typeof AuthSignInRoute
-  '/auth/sign-up': typeof AuthSignUpRoute
   '/dash': typeof AuthenticatedAdminDashRoute
   '/admin/site-new': typeof AuthenticatedAdminAdminSiteNewRoute
   '/admin': typeof AuthenticatedAdminAdminIndexRoute
@@ -134,7 +126,6 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/_authenticated/_admin': typeof AuthenticatedAdminRouteWithChildren
   '/auth/sign-in': typeof AuthSignInRoute
-  '/auth/sign-up': typeof AuthSignUpRoute
   '/_authenticated/_admin/dash': typeof AuthenticatedAdminDashRoute
   '/_authenticated/_admin/admin/site-new': typeof AuthenticatedAdminAdminSiteNewRoute
   '/_authenticated/_admin/admin/': typeof AuthenticatedAdminAdminIndexRoute
@@ -150,7 +141,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth/sign-in'
-    | '/auth/sign-up'
     | '/dash'
     | '/admin/site-new'
     | '/admin/'
@@ -164,7 +154,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth/sign-in'
-    | '/auth/sign-up'
     | '/dash'
     | '/admin/site-new'
     | '/admin'
@@ -180,7 +169,6 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/_authenticated/_admin'
     | '/auth/sign-in'
-    | '/auth/sign-up'
     | '/_authenticated/_admin/dash'
     | '/_authenticated/_admin/admin/site-new'
     | '/_authenticated/_admin/admin/'
@@ -196,7 +184,6 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AuthSignInRoute: typeof AuthSignInRoute
-  AuthSignUpRoute: typeof AuthSignUpRoute
   AuthJoinCodeIndexRoute: typeof AuthJoinCodeIndexRoute
 }
 
@@ -214,13 +201,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth/sign-up': {
-      id: '/auth/sign-up'
-      path: '/auth/sign-up'
-      fullPath: '/auth/sign-up'
-      preLoaderRoute: typeof AuthSignUpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/sign-in': {
@@ -348,7 +328,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AuthSignInRoute: AuthSignInRoute,
-  AuthSignUpRoute: AuthSignUpRoute,
   AuthJoinCodeIndexRoute: AuthJoinCodeIndexRoute,
 }
 export const routeTree = rootRouteImport

@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
 import { useAppForm } from "#/hooks/form";
 import { authClient } from "#/lib/auth-client";
-import { createFileRoute, Link, redirect } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/auth/sign-in")({
   component: RouteComponent,
@@ -77,12 +77,6 @@ function RouteComponent() {
               <form.ErrorMap />
             </form.AppForm>
           </form>
-          <Link
-            to={"/auth/sign-up"}
-            className="hover:underline text-muted-foreground"
-          >
-            Don't have an account? Sign up
-          </Link>
         </CardContent>
       </Card>
     </div>
