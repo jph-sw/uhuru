@@ -1,6 +1,7 @@
 import {
 	EnvelopeIcon,
 	GearIcon,
+	HouseIcon,
 	PlusIcon,
 	TextboxIcon,
 	UsersIcon,
@@ -78,6 +79,22 @@ export function AdminSidebar() {
 				</div>
 			</SidebarHeader>
 			<SidebarContent>
+				<SidebarGroup>
+					<SidebarGroupContent>
+						<SidebarMenu>
+							<SidebarMenuItem>
+								<SidebarMenuButton
+									disabled={!site}
+									render={
+										<Link to="/admin/site/$site" params={{ site: site ?? "" }}>
+											<HouseIcon /> Home
+										</Link>
+									}
+								/>
+							</SidebarMenuItem>
+						</SidebarMenu>
+					</SidebarGroupContent>
+				</SidebarGroup>
 				<SidebarGroup>
 					<SidebarGroupContent>
 						<SidebarMenu>
