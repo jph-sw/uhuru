@@ -98,7 +98,10 @@ function RouteComponent() {
 											Your invite code
 										</AlertDescription>
 										<InputGroup>
-											<InputGroupInput value={inviteCode} readOnly />
+											<InputGroupInput
+												value={`http://localhost:3000/auth/join/${inviteCode}`}
+												readOnly
+											/>
 											<InputGroupAddon align="inline-end">
 												<InputGroupButton
 													aria-label="Copy"
@@ -106,7 +109,7 @@ function RouteComponent() {
 													size="icon-xs"
 													onClick={() => {
 														copyToClipboard(
-															"http://localhost:3000/auth/join/" + inviteCode,
+															`http://localhost:3000/auth/join/${inviteCode}`,
 														);
 													}}
 												>

@@ -8,6 +8,7 @@ import { Input } from "#/components/ui/input";
 import { fieldQueryOptions } from "#/data/query-options-fields";
 import { siteByIdQueryOptions } from "#/data/query-options-site";
 import { api } from "#/lib/api";
+import { authClient } from "#/lib/auth-client";
 import {
 	type Field,
 	groupFields,
@@ -175,7 +176,11 @@ function RouteComponent() {
 					))}
 				</div>
 			</div>
-			<Button size={"lg"} className={"mb-4"}>
+			<Button
+				size={"lg"}
+				className={"mb-4"}
+				onClick={() => authClient.signOut()}
+			>
 				<SignOutIcon /> Sign out
 			</Button>
 		</div>
