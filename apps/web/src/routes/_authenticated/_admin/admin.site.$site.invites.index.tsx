@@ -63,12 +63,9 @@ function RouteComponent() {
   });
 
   return (
-    <div>
-      <Card className="max-w-5xl">
-        <CardHeader>
-          <CardTitle>Invites</CardTitle>
-        </CardHeader>
-        <CardContent>
+    <div className="flex justify-center">
+      <div className="w-7xl flex flex-col gap-4">
+        <div className="flex justify-end">
           <Dialog>
             <DialogTrigger render={<Button>Invite user</Button>} />
             <DialogContent>
@@ -122,9 +119,16 @@ function RouteComponent() {
               </form>
             </DialogContent>
           </Dialog>
-          <InvitesTable invites={invites} />
-        </CardContent>
-      </Card>
+        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>Invites</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <InvitesTable invites={invites} />
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
