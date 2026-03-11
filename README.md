@@ -16,7 +16,7 @@
 
 Uhuru is a headless CMS designed around a specific workflow: a developer builds a website, a client needs to edit the text on it. That's it. No bloated page builders, no drag-and-drop editors — just a clean interface where clients can update content, and a simple API developers can query.
 
-Clients are invited by the developer and get access only to the site they belong to.
+Clients are invited by the developer and get access only to the site they belong to. It includes built-in multi-language (i18n) support with automatic fallbacks.
 
 ## Stack
 
@@ -51,11 +51,11 @@ Requires a `.env` file at the root — see `.env.example`.
 
 ## How it works
 
-1. A developer registers as an **admin** and creates a site
-2. The admin defines **fields** — named pieces of content (e.g. `hero-title`, `about-body`)
+1. A developer registers as an **admin** and creates a site (with configurable supported languages)
+2. The admin defines **fields** — named pieces of content (e.g. `hero.title`, `about.body`)
 3. The admin invites a **client** via an invite link
-4. The client creates an account and can edit the content of their site
-5. The developer fetches content from the API and renders it on the website
+4. The client creates an account and can edit the content of their site, translating it into the configured languages
+5. The developer fetches content from the API (optionally specifying a language) and renders it on the website
 
 ## Self-hosting
 
