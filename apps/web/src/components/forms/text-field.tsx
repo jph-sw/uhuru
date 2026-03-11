@@ -13,15 +13,16 @@ export default function TextField({
 	readOnly?: boolean;
 	disabled?: boolean;
 }) {
+	const id = `${label}-${crypto.randomUUID()}`;
 	const field = useFieldContext<string>();
-
 	const errors = useStore(field.store, (state) => state.meta.errors);
 
 	return (
 		<div className="mb-3">
-			<label>
+			<label htmlFor={id}>
 				<div>{label}</div>
 				<Input
+					id={id}
 					value={field.state.value}
 					type={type}
 					onChange={(e) => field.handleChange(e.target.value)}

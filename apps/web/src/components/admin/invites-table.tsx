@@ -31,14 +31,17 @@ export function InvitesTable({
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				{invites &&
+				{invites ? (
 					invites.map((invite) => (
-						<TableRow>
+						<TableRow key={invite.id}>
 							<TableCell className="font-medium">{invite.id}</TableCell>
 							<TableCell>{invite.siteId}</TableCell>
 							<TableCell>{invite.maxUses}</TableCell>
 						</TableRow>
-					))}
+					))
+				) : (
+					<span>No invites</span>
+				)}
 			</TableBody>
 		</Table>
 	);

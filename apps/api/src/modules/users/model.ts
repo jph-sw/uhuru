@@ -5,5 +5,5 @@ import { spread } from "../../db/utils";
 const { site_id } = spread(userTable, "insert");
 
 export const UsersModel = {
-  selectUsersBody: t.Object({ site_id }),
+	selectUsersBody: t.Object({ site_id }),
 };

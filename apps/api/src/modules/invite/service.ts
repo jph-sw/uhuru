@@ -1,68 +1,68 @@
 import { eq } from "drizzle-orm";
+import { ulid } from "ulidx";
 import { db } from "../../db";
 import {
-  invite as inviteTable,
-  inviteUse as inviteUseTable,
+	invite as inviteTable,
+	inviteUse as inviteUseTable,
 } from "../../db/schema";
-import { ulid } from "ulidx";
 
 export abstract class Invite {
-  static getInvite({ code }: { code: string }) {
-    const invite = db
-      .select()
-      .from(inviteTable)
-      .where(eq(inviteTable.code, code));
+	static getInvite({ code }: { code: string }) {
+		const invite = db
+			.select()
+			.from(inviteTable)
+			.where(eq(inviteTable.code, code));
 
-    return invite;
-  }
+		return invite;
+	}
 
-  static async createInvite({
-    maxUses,
-    siteId,
-  }: {
-    maxUses?: string;
-    siteId: string;
-  }) {
-    const id = ulid();
-    const code = ulid();
+	static async createInvite({
+		maxUses,
+		siteId,
+	}: {
+		maxUses?: string;
+		siteId: string;
+	}) {
+		const id = ulid();
+		const code = ulid();
 
-    const res = await db
-      .insert(inviteTable)
-      .values({ id, code, maxUses, siteId, createdAt: new Date() })
-      .returning();
+		const res = await db
+			.insert(inviteTable)
+			.values({ id, code, maxUses, siteId, createdAt: new Date() })
+			.returning();
 
-    return res;
-  }
+		return res;
+	}
 
-  static async checkInvite({ code }: { code: string }) {
-    const res = await db
-      .select()
-      .from(inviteTable)
-      .where(eq(inviteTable.code, code));
+	static async checkInvite({ code }: { code: string }) {
+		const res = await db
+			.select()
+			.from(inviteTable)
+			.where(eq(inviteTable.code, code));
 
-    if (res.length <= 0) {
-      return { valid: false };
-    } else {
-      // check if it has been used before
-      const uses = await db
-        .select()
-        .from(inviteUseTable)
-        .where(eq(inviteUseTable.inviteCode, res[0].code));
+		if (res.length <= 0) {
+			return { valid: false };
+		} else {
+			// check if it has been used before
+			const uses = await db
+				.select()
+				.from(inviteUseTable)
+				.where(eq(inviteUseTable.inviteCode, res[0].code));
 
-      if (uses.length >= Number(res[0].maxUses)) {
-        return { valid: false };
-      }
+			if (uses.length >= Number(res[0].maxUses)) {
+				return { valid: false };
+			}
 
-      return { valid: true, invite: res[0] };
-    }
-  }
+			return { valid: true, invite: res[0] };
+		}
+	}
 
-  static async getInviteBySiteId({ siteId }: { siteId: string }) {
-    const res = await db
-      .select()
-      .from(inviteTable)
-      .where(eq(inviteTable.siteId, siteId));
+	static async getInviteBySiteId({ siteId }: { siteId: string }) {
+		const res = await db
+			.select()
+			.from(inviteTable)
+			.where(eq(inviteTable.siteId, siteId));
 
-    return res;
-  }
+		return res;
+	}
 }

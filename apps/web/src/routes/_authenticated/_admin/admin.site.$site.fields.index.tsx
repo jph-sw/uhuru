@@ -23,7 +23,7 @@ export const Route = createFileRoute(
 	component: RouteComponent,
 });
 
-type Field = {
+export type Field = {
 	id: string;
 	key: string | null;
 	content: string | null;
@@ -31,11 +31,12 @@ type Field = {
 	language?: string | null;
 };
 
-function groupFields(fields: Field[]): Record<string, Field[]> {
+export function groupFields(fields: Field[]): Record<string, Field[]> {
 	const groups: Record<string, Field[]> = {};
 	for (const field of fields) {
 		const top = field.key?.split(".")[0] ?? "ungrouped";
-		(groups[top] ??= []).push(field);
+		groups[top] ??= [];
+		groups[top].push(field);
 	}
 	return groups;
 }

@@ -36,13 +36,16 @@ export function UsersTable({
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				{users &&
+				{users ? (
 					users.map((user) => (
-						<TableRow>
+						<TableRow key={user.id}>
 							<TableCell className="font-medium">{user.name}</TableCell>
 							<TableCell>{user.email}</TableCell>
 						</TableRow>
-					))}
+					))
+				) : (
+					<span>No users</span>
+				)}
 			</TableBody>
 		</Table>
 	);

@@ -39,7 +39,7 @@ export function AdminSidebar() {
 			<SidebarHeader>
 				<div className="flex items-center gap-1">
 					<Select
-						disabled={sites ? (sites.length <= 0 ? true : false) : true}
+						disabled={sites ? sites.length <= 0 : true}
 						value={site}
 						onValueChange={(e) => {
 							navigate({

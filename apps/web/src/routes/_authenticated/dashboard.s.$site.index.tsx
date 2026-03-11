@@ -8,27 +8,14 @@ import { Input } from "#/components/ui/input";
 import { fieldQueryOptions } from "#/data/query-options-fields";
 import { siteByIdQueryOptions } from "#/data/query-options-site";
 import { api } from "#/lib/api";
+import {
+	type Field,
+	groupFields,
+} from "./_admin/admin.site.$site.fields.index";
 
 export const Route = createFileRoute("/_authenticated/dashboard/s/$site/")({
 	component: RouteComponent,
 });
-
-type Field = {
-	id: string;
-	key: string | null;
-	content: string | null;
-	siteId: string | null;
-	language?: string | null;
-};
-
-function groupFields(fields: Field[]): Record<string, Field[]> {
-	const groups: Record<string, Field[]> = {};
-	for (const field of fields) {
-		const top = field.key?.split(".")[0] ?? "ungrouped";
-		(groups[top] ??= []).push(field);
-	}
-	return groups;
-}
 
 function FieldRow({
 	field,
