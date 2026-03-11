@@ -16,8 +16,8 @@ function RouteComponent() {
   const { data: users } = useQuery(usersQueryOptions({ siteId: site }));
 
   return (
-    <div>
-      <Card className="w-5xl">
+    <div className="flex justify-center">
+      <Card className="w-7xl">
         <CardHeader>
           <CardTitle>Users</CardTitle>
         </CardHeader>

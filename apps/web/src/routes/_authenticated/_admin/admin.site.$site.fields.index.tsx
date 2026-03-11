@@ -120,54 +120,56 @@ function RouteComponent() {
   });
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex justify-end">
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger render={<Button>New field</Button>} />
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>New field</DialogTitle>
-            </DialogHeader>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                form.handleSubmit();
-              }}
-            >
-              <form.AppField
-                name="key"
-                children={(field) => <field.TextField label="Key" />}
-              />
-              <form.AppField
-                name="content"
-                children={(field) => <field.TextField label="Content" />}
-              />
-              <form.AppForm>
-                <form.SubscribeButton label="Create" />
-                <form.ErrorMap />
-              </form.AppForm>
-            </form>
-          </DialogContent>
-        </Dialog>
-      </div>
+    <div className="flex justify-center">
+      <div className="w-7xl flex flex-col gap-4">
+        <div className="flex justify-end">
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger render={<Button>New field</Button>} />
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>New field</DialogTitle>
+              </DialogHeader>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  form.handleSubmit();
+                }}
+              >
+                <form.AppField
+                  name="key"
+                  children={(field) => <field.TextField label="Key" />}
+                />
+                <form.AppField
+                  name="content"
+                  children={(field) => <field.TextField label="Content" />}
+                />
+                <form.AppForm>
+                  <form.SubscribeButton label="Create" />
+                  <form.ErrorMap />
+                </form.AppForm>
+              </form>
+            </DialogContent>
+          </Dialog>
+        </div>
 
-      {!fields?.length && (
-        <span className="text-muted-foreground text-sm">No fields yet.</span>
-      )}
+        {!fields?.length && (
+          <span className="text-muted-foreground text-sm">No fields yet.</span>
+        )}
 
-      <div className="flex flex-col gap-3">
-        {Object.entries(groups).map(([group, groupFields]) => (
-          <Card key={group}>
-            <CardHeader>
-              <CardTitle className="font-mono text-sm">{group}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {groupFields.map((field) => (
-                <FieldRow key={field.id} field={field} siteId={site} />
-              ))}
-            </CardContent>
-          </Card>
-        ))}
+        <div className="flex flex-col gap-3">
+          {Object.entries(groups).map(([group, groupFields]) => (
+            <Card key={group}>
+              <CardHeader>
+                <CardTitle className="font-mono text-sm">{group}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {groupFields.map((field) => (
+                  <FieldRow key={field.id} field={field} siteId={site} />
+                ))}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
   );
