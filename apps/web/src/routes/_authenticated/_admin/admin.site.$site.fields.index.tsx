@@ -9,12 +9,13 @@ import {
 } from "#/components/ui/dialog";
 import { Input } from "#/components/ui/input";
 import { fieldQueryOptions } from "#/data/query-options-fields";
+import { siteByIdQueryOptions } from "#/data/query-options-site";
 import { useAppForm } from "#/hooks/form";
 import { api } from "#/lib/api";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { CheckIcon, XIcon } from "@phosphor-icons/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const Route = createFileRoute(
   "/_authenticated/_admin/admin/site/$site/fields/",
@@ -27,6 +28,7 @@ type Field = {
   key: string | null;
   content: string | null;
   siteId: string | null;
+  language?: string | null;
 };
 
 function groupFields(fields: Field[]): Record<string, Field[]> {
@@ -38,7 +40,15 @@ function groupFields(fields: Field[]): Record<string, Field[]> {
   return groups;
 }
 
-function FieldRow({ field, siteId }: { field: Field; siteId: string }) {
+function FieldRow({
+  field,
+  siteId,
+  language,
+}: {
+  field: Field;
+  siteId: string;
+  language: string;
+}) {
   const queryClient = useQueryClient();
   const [editing, setEditing] = useState(false);
   const [value, setValue] = useState(field.content ?? "");
@@ -48,7 +58,16 @@ function FieldRow({ field, siteId }: { field: Field; siteId: string }) {
 
   async function save() {
     setSaving(true);
-    await api.fields({ id: field.id }).patch({ content: value });
+    if (field.id) {
+      await api.fields({ id: field.id }).patch({ content: value });
+    } else {
+      await api.fields.post({
+        key: field.key!,
+        content: value,
+        siteId,
+        language,
+      });
+    }
     await queryClient.invalidateQueries({ queryKey: ["fields", siteId] });
     setSaving(false);
     setEditing(false);
@@ -100,10 +119,35 @@ function FieldRow({ field, siteId }: { field: Field; siteId: string }) {
 function RouteComponent() {
   const { site } = Route.useParams();
   const queryClient = useQueryClient();
-  const { data: fields } = useQuery(fieldQueryOptions({ siteId: site }));
+
+  const { data: siteData }: any = useQuery(
+    siteByIdQueryOptions({ siteId: site }),
+  );
+  const languages: string[] = siteData?.languages || ["en"];
+
+  const [language, setLanguage] = useState<string>("en");
+
+  useEffect(() => {
+    if (languages.length > 0 && !languages.includes(language)) {
+      setLanguage(languages[0]);
+    }
+  }, [languages, language]);
+
+  const { data: allFields } = useQuery(fieldQueryOptions({ siteId: site }));
   const [open, setOpen] = useState(false);
 
-  const groups = groupFields(fields ?? []);
+  const keys = Array.from(
+    new Set((allFields ?? []).map((f) => f.key).filter(Boolean)),
+  ) as string[];
+
+  const fields = keys.map((key) => {
+    const existing = allFields?.find(
+      (f) => f.key === key && f.language === language,
+    );
+    return existing || { id: "", key, content: "", siteId: site, language };
+  });
+
+  const groups = groupFields(fields);
 
   const form = useAppForm({
     defaultValues: { key: "", content: "" },
@@ -112,6 +156,7 @@ function RouteComponent() {
         key: value.key,
         content: value.content,
         siteId: site,
+        language,
       });
       await queryClient.invalidateQueries({ queryKey: ["fields", site] });
       form.reset();
@@ -122,7 +167,20 @@ function RouteComponent() {
   return (
     <div className="flex justify-center">
       <div className="w-7xl flex flex-col gap-4">
-        <div className="flex justify-end">
+        <div className="flex justify-between items-center mb-4">
+          <div className="flex gap-2">
+            {languages.length > 1 &&
+              languages.map((lang) => (
+                <Button
+                  key={lang}
+                  variant={lang === language ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setLanguage(lang)}
+                >
+                  {lang.toUpperCase()}
+                </Button>
+              ))}
+          </div>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger render={<Button>New field</Button>} />
             <DialogContent>
@@ -164,7 +222,12 @@ function RouteComponent() {
               </CardHeader>
               <CardContent>
                 {groupFields.map((field) => (
-                  <FieldRow key={field.id} field={field} siteId={site} />
+                  <FieldRow
+                    key={`${field.key}-${language}`}
+                    field={field as Field}
+                    siteId={site}
+                    language={language}
+                  />
                 ))}
               </CardContent>
             </Card>

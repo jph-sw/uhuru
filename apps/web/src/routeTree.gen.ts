@@ -19,6 +19,7 @@ import { Route as AuthenticatedAdminAdminIndexRouteImport } from './routes/_auth
 import { Route as AuthenticatedAdminAdminSiteNewRouteImport } from './routes/_authenticated/_admin/admin.site-new'
 import { Route as AuthenticatedDashboardSSiteIndexRouteImport } from './routes/_authenticated/dashboard.s.$site.index'
 import { Route as AuthenticatedAdminAdminSiteSiteIndexRouteImport } from './routes/_authenticated/_admin/admin.site.$site.index'
+import { Route as AuthenticatedAdminAdminSiteSiteSettingsRouteImport } from './routes/_authenticated/_admin/admin.site.$site.settings'
 import { Route as AuthenticatedAdminAdminSiteSiteUsersIndexRouteImport } from './routes/_authenticated/_admin/admin.site.$site.users.index'
 import { Route as AuthenticatedAdminAdminSiteSiteInvitesIndexRouteImport } from './routes/_authenticated/_admin/admin.site.$site.invites.index'
 import { Route as AuthenticatedAdminAdminSiteSiteFieldsIndexRouteImport } from './routes/_authenticated/_admin/admin.site.$site.fields.index'
@@ -75,6 +76,12 @@ const AuthenticatedAdminAdminSiteSiteIndexRoute =
     path: '/admin/site/$site/',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminAdminSiteSiteSettingsRoute =
+  AuthenticatedAdminAdminSiteSiteSettingsRouteImport.update({
+    id: '/admin/site/$site/settings',
+    path: '/admin/site/$site/settings',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminAdminSiteSiteUsersIndexRoute =
   AuthenticatedAdminAdminSiteSiteUsersIndexRouteImport.update({
     id: '/admin/site/$site/users/',
@@ -102,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AuthenticatedAdminAdminIndexRoute
   '/auth/join/$code/': typeof AuthJoinCodeIndexRoute
   '/dashboard/s/$site/': typeof AuthenticatedDashboardSSiteIndexRoute
+  '/admin/site/$site/settings': typeof AuthenticatedAdminAdminSiteSiteSettingsRoute
   '/admin/site/$site/': typeof AuthenticatedAdminAdminSiteSiteIndexRoute
   '/admin/site/$site/fields/': typeof AuthenticatedAdminAdminSiteSiteFieldsIndexRoute
   '/admin/site/$site/invites/': typeof AuthenticatedAdminAdminSiteSiteInvitesIndexRoute
@@ -115,6 +123,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminAdminIndexRoute
   '/auth/join/$code': typeof AuthJoinCodeIndexRoute
   '/dashboard/s/$site': typeof AuthenticatedDashboardSSiteIndexRoute
+  '/admin/site/$site/settings': typeof AuthenticatedAdminAdminSiteSiteSettingsRoute
   '/admin/site/$site': typeof AuthenticatedAdminAdminSiteSiteIndexRoute
   '/admin/site/$site/fields': typeof AuthenticatedAdminAdminSiteSiteFieldsIndexRoute
   '/admin/site/$site/invites': typeof AuthenticatedAdminAdminSiteSiteInvitesIndexRoute
@@ -131,6 +140,7 @@ export interface FileRoutesById {
   '/_authenticated/_admin/admin/': typeof AuthenticatedAdminAdminIndexRoute
   '/auth/join/$code/': typeof AuthJoinCodeIndexRoute
   '/_authenticated/dashboard/s/$site/': typeof AuthenticatedDashboardSSiteIndexRoute
+  '/_authenticated/_admin/admin/site/$site/settings': typeof AuthenticatedAdminAdminSiteSiteSettingsRoute
   '/_authenticated/_admin/admin/site/$site/': typeof AuthenticatedAdminAdminSiteSiteIndexRoute
   '/_authenticated/_admin/admin/site/$site/fields/': typeof AuthenticatedAdminAdminSiteSiteFieldsIndexRoute
   '/_authenticated/_admin/admin/site/$site/invites/': typeof AuthenticatedAdminAdminSiteSiteInvitesIndexRoute
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/auth/join/$code/'
     | '/dashboard/s/$site/'
+    | '/admin/site/$site/settings'
     | '/admin/site/$site/'
     | '/admin/site/$site/fields/'
     | '/admin/site/$site/invites/'
@@ -159,6 +170,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth/join/$code'
     | '/dashboard/s/$site'
+    | '/admin/site/$site/settings'
     | '/admin/site/$site'
     | '/admin/site/$site/fields'
     | '/admin/site/$site/invites'
@@ -174,6 +186,7 @@ export interface FileRouteTypes {
     | '/_authenticated/_admin/admin/'
     | '/auth/join/$code/'
     | '/_authenticated/dashboard/s/$site/'
+    | '/_authenticated/_admin/admin/site/$site/settings'
     | '/_authenticated/_admin/admin/site/$site/'
     | '/_authenticated/_admin/admin/site/$site/fields/'
     | '/_authenticated/_admin/admin/site/$site/invites/'
@@ -259,6 +272,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAdminSiteSiteIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/_admin/admin/site/$site/settings': {
+      id: '/_authenticated/_admin/admin/site/$site/settings'
+      path: '/admin/site/$site/settings'
+      fullPath: '/admin/site/$site/settings'
+      preLoaderRoute: typeof AuthenticatedAdminAdminSiteSiteSettingsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/_admin/admin/site/$site/users/': {
       id: '/_authenticated/_admin/admin/site/$site/users/'
       path: '/admin/site/$site/users'
@@ -287,6 +307,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminDashRoute: typeof AuthenticatedAdminDashRoute
   AuthenticatedAdminAdminSiteNewRoute: typeof AuthenticatedAdminAdminSiteNewRoute
   AuthenticatedAdminAdminIndexRoute: typeof AuthenticatedAdminAdminIndexRoute
+  AuthenticatedAdminAdminSiteSiteSettingsRoute: typeof AuthenticatedAdminAdminSiteSiteSettingsRoute
   AuthenticatedAdminAdminSiteSiteIndexRoute: typeof AuthenticatedAdminAdminSiteSiteIndexRoute
   AuthenticatedAdminAdminSiteSiteFieldsIndexRoute: typeof AuthenticatedAdminAdminSiteSiteFieldsIndexRoute
   AuthenticatedAdminAdminSiteSiteInvitesIndexRoute: typeof AuthenticatedAdminAdminSiteSiteInvitesIndexRoute
@@ -297,6 +318,8 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminDashRoute: AuthenticatedAdminDashRoute,
   AuthenticatedAdminAdminSiteNewRoute: AuthenticatedAdminAdminSiteNewRoute,
   AuthenticatedAdminAdminIndexRoute: AuthenticatedAdminAdminIndexRoute,
+  AuthenticatedAdminAdminSiteSiteSettingsRoute:
+    AuthenticatedAdminAdminSiteSiteSettingsRoute,
   AuthenticatedAdminAdminSiteSiteIndexRoute:
     AuthenticatedAdminAdminSiteSiteIndexRoute,
   AuthenticatedAdminAdminSiteSiteFieldsIndexRoute:
