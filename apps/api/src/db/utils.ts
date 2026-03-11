@@ -10,7 +10,6 @@ import {
 	createInsertSchema,
 	createSelectSchema,
 } from "drizzle-typebox";
-import { table } from "./schema";
 
 type Spread<
 	T extends TObject | Table,
@@ -39,6 +38,7 @@ export const spread = <
 	mode?: Mode,
 ): Spread<T, Mode> => {
 	const newSchema: Record<string, unknown> = {};
+	// biome-ignore lint/suspicious/noImplicitAnyLet: Unknown type
 	let table;
 
 	switch (mode) {

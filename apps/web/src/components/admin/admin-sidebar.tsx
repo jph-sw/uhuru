@@ -28,6 +28,7 @@ import {
 } from "#/components/ui/sidebar";
 import { siteQueryOptions } from "#/data/query-options-sites";
 import { authClient } from "#/lib/auth-client";
+import { cn } from "#/lib/utils";
 
 export function AdminSidebar() {
 	const { data: sites } = useQuery(siteQueryOptions);
@@ -63,7 +64,11 @@ export function AdminSidebar() {
 					</Select>
 					<Button
 						variant={"secondary"}
-						className={"h-12"}
+						className={cn(
+							"h-12 transition-all duration-300",
+							sites?.length === 0 &&
+								"bg-primary/90 text-primary-foreground ring-2 ring-primary/30 hover:bg-primary shadow-lg hover:shadow-xl hover:ring-primary/50 animate-pulse",
+						)}
 						render={
 							<Link to="/admin/site-new">
 								<PlusIcon />
@@ -120,6 +125,7 @@ export function AdminSidebar() {
 						<SidebarMenu>
 							<SidebarMenuItem>
 								<SidebarMenuButton
+									disabled={!site}
 									render={
 										<Link
 											to="/admin/site/$site/settings"

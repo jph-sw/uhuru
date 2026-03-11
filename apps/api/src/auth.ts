@@ -4,7 +4,7 @@ import { admin } from "better-auth/plugins";
 import { db } from "./db";
 
 export const auth = betterAuth({
-	baseURL: Bun.env.BETTER_AUTH_URL,
+	baseURL: Bun.env.API_URL,
 	trustedOrigins: Bun.env.TRUSTED_ORIGINS
 		? Bun.env.TRUSTED_ORIGINS.split(",")
 		: ["http://localhost:3000"],
