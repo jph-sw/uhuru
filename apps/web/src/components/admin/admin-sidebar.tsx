@@ -55,9 +55,13 @@ export function AdminSidebar() {
 								? sites.filter((item) => item.id === site)[0].name
 								: "No sites"}
 						</SelectTrigger>
-						<SelectContent>
+						<SelectContent className={""}>
 							{sites?.map((site) => (
-								<SelectItem key={site.id} value={site.id}>
+								<SelectItem
+									key={site.id}
+									value={site.id}
+									className={"px-2 py-3"}
+								>
 									{site.name}
 								</SelectItem>
 							))}
