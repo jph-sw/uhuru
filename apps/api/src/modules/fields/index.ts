@@ -13,6 +13,7 @@ export const fields = new Elysia({ prefix: "fields" })
           key: body.key,
           content: body.content,
           siteId: body.siteId,
+          language: body.language,
         }),
       { body: FieldsModel.createFieldBody },
     ),
@@ -21,9 +22,14 @@ export const fields = new Elysia({ prefix: "fields" })
     app
       .get(
         "/site/:siteId",
-        ({ params }) => Fields.getFields({ siteId: params.siteId }),
+        ({ params, query }) =>
+          Fields.getFields({
+            siteId: params.siteId,
+            language: query.language,
+          }),
         {
-          params: FieldsModel.selectFieldBody,
+          params: FieldsModel.selectFieldParams,
+          query: FieldsModel.selectFieldQuery,
         },
       )
       .patch(

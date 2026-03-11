@@ -1,5 +1,11 @@
 import { relations } from "drizzle-orm";
-import { sqliteTable, text, integer, index } from "drizzle-orm/sqlite-core";
+import {
+  sqliteTable,
+  text,
+  integer,
+  index,
+  unique,
+} from "drizzle-orm/sqlite-core";
 
 export const user = sqliteTable("user", {
   id: text("id").primaryKey(),
@@ -106,24 +112,39 @@ export const site = sqliteTable("site", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   domain: text("domain").notNull().unique(),
+  languages: text("languages", { mode: "json" })
+    .$type<string[]>()
+    .notNull()
+    .default(["en"]),
   createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
   updatedAt: integer("updated_at", { mode: "timestamp_ms" })
     .$onUpdate(() => new Date())
     .notNull(),
 });
 
-export const field = sqliteTable("field", {
-  id: text("id").primaryKey(),
-  key: text("key").notNull().unique(),
-  content: text("content").notNull(),
-  createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
-  updatedAt: integer("updated_at", { mode: "timestamp_ms" })
-    .$onUpdate(() => new Date())
-    .notNull(),
-  siteId: text("site_id")
-    .notNull()
-    .references(() => site.id),
-});
+export const field = sqliteTable(
+  "field",
+  {
+    id: text("id").primaryKey(),
+    key: text("key").notNull(),
+    language: text("language").notNull().default("en"),
+    content: text("content").notNull(),
+    createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
+    updatedAt: integer("updated_at", { mode: "timestamp_ms" })
+      .$onUpdate(() => new Date())
+      .notNull(),
+    siteId: text("site_id")
+      .notNull()
+      .references(() => site.id),
+  },
+  (table) => [
+    unique("field_site_key_language_unique").on(
+      table.siteId,
+      table.key,
+      table.language,
+    ),
+  ],
+);
 
 export const invite = sqliteTable("invite", {
   id: text("id").primaryKey(),

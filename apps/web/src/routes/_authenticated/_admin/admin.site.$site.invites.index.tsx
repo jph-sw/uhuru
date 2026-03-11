@@ -64,7 +64,7 @@ function RouteComponent() {
 
   return (
     <div className="flex justify-center">
-      <div className="w-7xl flex flex-col gap-4">
+      <div className="w-7xl flex flex-col gap-8">
         <div className="flex justify-end">
           <Dialog>
             <DialogTrigger render={<Button>Invite user</Button>} />

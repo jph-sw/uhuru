@@ -121,7 +121,10 @@ export function AdminSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   render={
-                    <Link to="/admin/site-new">
+                    <Link
+                      to="/admin/site/$site/settings"
+                      params={{ site: site! }}
+                    >
                       <GearIcon /> General Settings
                     </Link>
                   }
