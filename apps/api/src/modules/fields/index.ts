@@ -6,6 +6,18 @@ import { macros } from "../../macros";
 export const fields = new Elysia({ prefix: "fields" })
   .use(macros)
   .guard({ admin: true }, (app) =>
+    app.post(
+      "/",
+      ({ body }) =>
+        Fields.createField({
+          key: body.key,
+          content: body.content,
+          siteId: body.siteId,
+        }),
+      { body: FieldsModel.createFieldBody },
+    ),
+  )
+  .guard({ auth: true }, (app) =>
     app
       .get(
         "/site/:siteId",
@@ -14,20 +26,13 @@ export const fields = new Elysia({ prefix: "fields" })
           params: FieldsModel.selectFieldBody,
         },
       )
-      .post(
-        "/",
-        ({ body }) =>
-          Fields.createField({
-            key: body.key,
-            content: body.content,
-            siteId: body.siteId,
-          }),
-        { body: FieldsModel.createFieldBody },
-      )
       .patch(
         "/:id",
         ({ params, body }) =>
           Fields.updateField({ id: params.id, content: body.content }),
-        { params: FieldsModel.updateFieldParams, body: FieldsModel.updateFieldBody },
+        {
+          params: FieldsModel.updateFieldParams,
+          body: FieldsModel.updateFieldBody,
+        },
       ),
   );
