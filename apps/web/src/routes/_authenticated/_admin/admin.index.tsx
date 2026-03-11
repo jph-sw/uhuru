@@ -1,16 +1,16 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated/_admin/admin/")({
-  component: RouteComponent,
+	component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { auth } = Route.useRouteContext();
+	const { auth } = Route.useRouteContext();
 
-  return (
-    <div>
-      <div>hello {auth?.user.name}</div>
-      <Outlet />
-    </div>
-  );
+	return (
+		<div>
+			<div>hello {auth?.user.name}</div>
+			<Outlet />
+		</div>
+	);
 }
