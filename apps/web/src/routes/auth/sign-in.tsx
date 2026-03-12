@@ -50,7 +50,7 @@ function RouteComponent() {
 		},
 	});
 	return (
-		<div className="bg-secondary h-screen w-full flex justify-center items-center">
+		<div className="bg-[url('/light-mode.jpg')] dark:bg-[url('/dark-mode.jpg')] bg-cover h-screen w-full flex justify-center items-center">
 			<Card className="w-100">
 				<CardHeader>
 					<CardTitle>Sign in</CardTitle>
