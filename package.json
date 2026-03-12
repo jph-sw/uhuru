@@ -6,7 +6,7 @@
     "prettier": "^3.8.1"
   },
   "scripts": {
-    "dev": "bun run --parallel --workspaces dev",
+    "dev": "bun run --filter './apps/*' --filter './packages/*' dev",
     "format": "biome format",
     "lint": "biome lint",
     "check": "biome check"

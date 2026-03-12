@@ -1,4 +1,4 @@
-import { CheckIcon, XIcon } from "@phosphor-icons/react";
+import { CheckIcon, TrashIcon, XIcon } from "@phosphor-icons/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
@@ -57,6 +57,12 @@ function FieldRow({
 
 	const subKey = field.key?.split(".").slice(1).join(".") ?? field.key ?? "";
 
+	async function remove() {
+		if (!field.id) return;
+		await api.fields({ id: field.id }).delete();
+		await queryClient.invalidateQueries({ queryKey: ["fields", siteId] });
+	}
+
 	async function save() {
 		setSaving(true);
 		if (field.id) {
@@ -104,14 +110,21 @@ function FieldRow({
 					</Button>
 				</div>
 			) : (
-				<span
-					className="text-sm cursor-pointer hover:text-muted-foreground"
-					onClick={() => setEditing(true)}
-				>
-					{field.content || (
-						<span className="text-muted-foreground italic">empty</span>
+				<div className="flex items-center gap-2 flex-1">
+					<span
+						className="text-sm cursor-pointer hover:text-muted-foreground flex-1"
+						onClick={() => setEditing(true)}
+					>
+						{field.content || (
+							<span className="text-muted-foreground italic">empty</span>
+						)}
+					</span>
+					{field.id && (
+						<Button size="icon-sm" variant="ghost" onClick={remove}>
+							<TrashIcon />
+						</Button>
 					)}
-				</span>
+				</div>
 			)}
 		</div>
 	);

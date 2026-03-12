@@ -40,5 +40,10 @@ export const fields = new Elysia({ prefix: "fields" })
 					params: FieldsModel.updateFieldParams,
 					body: FieldsModel.updateFieldBody,
 				},
+			)
+			.delete(
+				"/:id",
+				({ params }) => Fields.deleteField({ id: params.id }),
+				{ params: FieldsModel.updateFieldParams },
 			),
 	);

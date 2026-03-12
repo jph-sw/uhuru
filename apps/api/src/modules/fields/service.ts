@@ -27,6 +27,10 @@ export abstract class Fields {
 		await db.update(fieldTable).set({ content }).where(eq(fieldTable.id, id));
 	}
 
+	static async deleteField({ id }: { id: string }) {
+		await db.delete(fieldTable).where(eq(fieldTable.id, id));
+	}
+
 	static async createField({
 		key,
 		content,
