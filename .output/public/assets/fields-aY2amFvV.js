@@ -1,1 +1,0 @@
-import{q as s}from"./queryOptions-Dm-pKaID.js";import{g as a}from"./main-D7lwVqEX.js";const n=({siteId:t,language:r})=>s({queryKey:["fields",t,r],queryFn:async()=>{const{api:o}=await a(),{data:i,error:e}=await o.fields.site({siteId:t}).get({query:r?{language:r}:void 0});if(e)throw e;return i}});export{n as f};

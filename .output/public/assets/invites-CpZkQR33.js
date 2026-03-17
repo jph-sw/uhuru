@@ -1,1 +1,0 @@
-import{q as i}from"./queryOptions-Dm-pKaID.js";import{g as o}from"./main-D7lwVqEX.js";const s=({siteId:t})=>i({queryKey:["invites",t],queryFn:async()=>{const{api:e}=await o(),r=await e.invite.site({siteId:t}).get();if(r.error)throw r.error;return r.data}});export{s as i};
