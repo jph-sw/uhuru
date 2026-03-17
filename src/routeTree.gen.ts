@@ -9,7 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
 import { Route as ApiSplatRouteImport } from './routes/api/$'
@@ -25,11 +24,6 @@ import { Route as AuthenticatedAdminAdminSiteSiteUsersIndexRouteImport } from '.
 import { Route as AuthenticatedAdminAdminSiteSiteInvitesIndexRouteImport } from './routes/_authenticated/_admin/admin.site.$site.invites.index'
 import { Route as AuthenticatedAdminAdminSiteSiteFieldsIndexRouteImport } from './routes/_authenticated/_admin/admin.site.$site.fields.index'
 
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -110,7 +104,6 @@ const AuthenticatedAdminAdminSiteSiteFieldsIndexRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/api/$': typeof ApiSplatRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -126,7 +119,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/api/$': typeof ApiSplatRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -143,7 +135,6 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/_authenticated/_admin': typeof AuthenticatedAdminRouteWithChildren
   '/api/$': typeof ApiSplatRoute
   '/auth/sign-in': typeof AuthSignInRoute
@@ -162,7 +153,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/about'
     | '/api/$'
     | '/auth/sign-in'
     | '/api/auth/$'
@@ -178,7 +168,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/about'
     | '/api/$'
     | '/auth/sign-in'
     | '/api/auth/$'
@@ -194,7 +183,6 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/about'
     | '/_authenticated/_admin'
     | '/api/$'
     | '/auth/sign-in'
@@ -212,7 +200,6 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
   ApiSplatRoute: typeof ApiSplatRoute
   AuthSignInRoute: typeof AuthSignInRoute
@@ -223,13 +210,6 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -361,7 +341,6 @@ const AuthenticatedAdminRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
   AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
   ApiSplatRoute: ApiSplatRoute,
   AuthSignInRoute: AuthSignInRoute,

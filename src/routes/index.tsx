@@ -1,5 +1,4 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import BetterAuthHeader from "#/integrations/better-auth/header-user";
 import { getSession } from "#/lib/auth-functions";
 
 export const Route = createFileRoute("/")({
@@ -26,9 +25,5 @@ export const Route = createFileRoute("/")({
 });
 
 function App() {
-	return (
-		<main className="page-wrap px-4 pb-8 pt-14">
-			<BetterAuthHeader />
-		</main>
-	);
+	return <main className="page-wrap px-4 pb-8 pt-14"></main>;
 }
