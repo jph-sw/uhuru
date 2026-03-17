@@ -12,7 +12,7 @@ export async function seed() {
 		.get();
 
 	if (existing) {
-		console.log("Admin user already exists. Skipping seeding.");
+		console.log("[INFO] Admin user already exists. Skipping seeding.");
 		return;
 	}
 
@@ -21,10 +21,12 @@ export async function seed() {
 	const password = process.env.ADMIN_PASSWORD;
 
 	if (!name || !email || !password) {
-		console.error("Admin user details missing from environment variables.");
+		console.error(
+			"[ERROR] Admin user details missing from environment variables.",
+		);
 		return;
 	}
 
 	await auth.api.createUser({ body: { name, email, password, role: "admin" } });
-	console.log("Admin user seeded successfully.");
+	console.log("[SUCCESS] Admin user seeded successfully.");
 }

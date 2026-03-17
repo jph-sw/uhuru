@@ -1,0 +1,1 @@
+import{q as a}from"./queryOptions-Dm-pKaID.js";import{g as o}from"./main-D7lwVqEX.js";const n=({siteId:r})=>a({queryKey:["users",r],queryFn:async()=>{const{api:s}=await o(),{data:e,error:t}=await s.users.site({site_id:r}).get();if(t)throw t;return e}});export{n as u};

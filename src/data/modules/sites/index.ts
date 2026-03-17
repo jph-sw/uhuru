@@ -9,7 +9,6 @@ export const sites = new Elysia({ prefix: "sites" })
 	.post(
 		"/",
 		async ({ body }) => {
-			console.log("createing site");
 			const site = await Sites.createSite({
 				name: body.name,
 				domain: body.domain,

@@ -13,9 +13,6 @@ const getApp = createIsomorphicFn()
 		const { join } = await import("#/data/modules/join");
 		const { sites } = await import("#/data/modules/sites");
 		const { users } = await import("#/data/modules/users");
-		const { seed } = await import("#/db/seed");
-
-		seed();
 
 		return new Elysia({ prefix: "/api" })
 			.get("/", "Hello Elysia!")

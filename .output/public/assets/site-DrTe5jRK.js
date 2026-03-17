@@ -1,0 +1,1 @@
+import{q as a}from"./queryOptions-Dm-pKaID.js";import{g as o}from"./main-D7lwVqEX.js";const y=({siteId:t})=>a({queryKey:["site",t],queryFn:async()=>{const{api:e}=await o(),{data:s,error:r}=await e.sites({id:t}).get();if(r)throw r;return s}});export{y as s};

@@ -16,7 +16,6 @@ export abstract class Sites {
 	}
 
 	static async createSite({ name, domain }: { name: string; domain: string }) {
-		console.log("-> creating site", { name, domain });
 		const id = name
 			.toLowerCase()
 			.trim()
