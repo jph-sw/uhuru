@@ -2,7 +2,7 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
 import { useAppForm } from "#/hooks/form";
 import { authClient } from "#/lib/auth-client";
-import { getSession } from "#/lib/auth-functions";
+import { getSession } from "#/lib/session";
 
 export const Route = createFileRoute("/auth/sign-in")({
 	component: RouteComponent,

@@ -2,7 +2,7 @@ import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { AdminSidebar } from "#/components/admin/admin-sidebar";
 import { SidebarProvider } from "#/components/ui/sidebar";
 import { TooltipProvider } from "#/components/ui/tooltip";
-import { getSession } from "#/lib/auth-functions";
+import { getSession } from "#/lib/session";
 
 type Search = {
 	site?: string;
