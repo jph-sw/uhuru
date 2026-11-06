@@ -1,17 +1,32 @@
+# Builds and runs Uhuru from source. For the published images, see README.md.
 services:
-  app:
-    build: .
-    ports:
-      - "3000:3000"
+  api:
+    build:
+      context: .
+      target: api
     volumes:
       - app-data:/app/data
     environment:
-      PORT: 3000
       BETTER_AUTH_SECRET: changeme-min-32-characters-long!!
+      # The URL users open, i.e. the web service, not the API
       BETTER_AUTH_URL: http://localhost:3000
       ADMIN_NAME: Admin
       ADMIN_EMAIL: admin@example.com
       ADMIN_PASSWORD: changeme
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      target: web
+    ports:
+      - "3000:3000"
+    environment:
+      API_URL: http://api:3001
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
 
 volumes:
   app-data:

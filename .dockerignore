@@ -1,7 +1,8 @@
-node_modules
-dist
-.output
+**/node_modules
+**/dist
+**/.output
 data
 .git
+.github
 .env
 *.local
