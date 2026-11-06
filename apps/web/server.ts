@@ -9,12 +9,19 @@
  * - Configurable file filtering with include/exclude patterns
  * - Memory-efficient response generation
  * - Production-ready caching headers
+ * - Proxies /api/* to the Uhuru API, so the browser only ever talks to this
+ *   origin and auth cookies stay first-party
  *
  * Environment Variables:
  *
  * PORT (number)
  *   - Server port number
  *   - Default: 3000
+ *
+ * API_URL (string)
+ *   - Base URL of the Uhuru API that /api/* is proxied to (also used for
+ *     server-side rendering requests)
+ *   - Default: http://localhost:3001
  *
  * ASSET_PRELOAD_MAX_SIZE (number)
  *   - Maximum file size in bytes to preload into memory
@@ -64,12 +71,12 @@
  */
 
 import path from 'node:path'
-import { seed } from './src/db/seed'
 
 // Configuration
 const SERVER_PORT = Number(process.env.PORT ?? 3000)
 const CLIENT_DIRECTORY = './dist/client'
 const SERVER_ENTRY_POINT = './dist/server/server.js'
+const API_URL = process.env.API_URL ?? 'http://localhost:3001'
 
 // Logging utilities for professional output
 const log = {
@@ -498,6 +505,38 @@ async function initializeStaticRoutes(
 }
 
 /**
+ * Forward a request to the API unchanged and stream the response back.
+ */
+async function proxyToApi(req: Request, clientIp?: string) {
+  const url = new URL(req.url)
+  const target = new URL(url.pathname + url.search, API_URL)
+
+  const headers = new Headers(req.headers)
+  headers.delete('host')
+  if (clientIp) {
+    const forwarded = headers.get('x-forwarded-for')
+    headers.set(
+      'x-forwarded-for',
+      forwarded ? `${forwarded}, ${clientIp}` : clientIp,
+    )
+  }
+
+  try {
+    return await fetch(target, {
+      method: req.method,
+      headers,
+      body: req.body,
+      redirect: 'manual',
+      // Bun decompresses fetch responses by default; pass them through as-is
+      decompress: false,
+    })
+  } catch (error) {
+    log.error(`API proxy error (${target.href}): ${String(error)}`)
+    return new Response('Bad Gateway', { status: 502 })
+  }
+}
+
+/**
  * Initialize the server
  */
 async function initializeServer() {
@@ -516,9 +555,6 @@ async function initializeServer() {
     process.exit(1)
   }
 
-  // Seed database (no-op if admin already exists)
-  await seed()
-
   // Build static routes with intelligent preloading
   const { routes } = await initializeStaticRoutes(CLIENT_DIRECTORY)
 
@@ -529,6 +565,10 @@ async function initializeServer() {
     routes: {
       // Serve static assets (preloaded or on-demand)
       ...routes,
+
+      // Forward API requests (including Better Auth) to the API
+      '/api/*': (req: Request, server: Bun.Server<undefined>) =>
+        proxyToApi(req, server.requestIP(req)?.address),
 
       // Fallback to TanStack Start handler for all other routes
       '/*': (req: Request) => {
