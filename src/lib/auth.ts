@@ -6,6 +6,10 @@ import { tanstackStartCookies } from "better-auth/tanstack-start";
 import { db } from "#/db";
 
 export const auth = betterAuth({
+	trustedOrigins: (process.env.TRUSTED_ORIGINS ?? "")
+		.split(",")
+		.map((origin) => origin.trim())
+		.filter(Boolean),
 	database: drizzleAdapter(db, { provider: "sqlite" }),
 	emailAndPassword: {
 		enabled: true,
