@@ -11,7 +11,7 @@
     "dev": "bun --filter @uhuru/api --filter @uhuru/web dev",
     "build": "bun --filter @uhuru/web build",
     "test": "bun --filter @uhuru/web test",
-    "test:contract": "bun --filter @uhuru/contract-tests test",
+    "test:contract": "bun --filter @uhuru/contract-tests test:bun-api",
     "db:generate": "bun --filter @uhuru/api db:generate",
     "db:migrate": "bun --filter @uhuru/api db:migrate",
     "db:push": "bun --filter @uhuru/api db:push",
