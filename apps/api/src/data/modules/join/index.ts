@@ -1,4 +1,4 @@
-import { Elysia, t } from "elysia";
+import { Elysia } from "elysia";
 import { JoinModel } from "./model";
 import { Join } from "./service";
 

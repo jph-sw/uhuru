@@ -2,6 +2,11 @@
   "name": "uhuru-new",
   "private": true,
   "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "tests/*"
+  ],
   "imports": {
     "#/*": "./src/*"
   },
@@ -10,11 +15,11 @@
     "build": "bun --bun vite build",
     "preview": "bun --bun vite preview",
     "test": "vitest run",
-    "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
-    "db:push": "drizzle-kit push",
-    "db:pull": "drizzle-kit pull",
-    "db:studio": "drizzle-kit studio",
+    "db:generate": "bun --filter @uhuru/api db:generate",
+    "db:migrate": "bun --filter @uhuru/api db:migrate",
+    "db:push": "bun --filter @uhuru/api db:push",
+    "db:pull": "bun --filter @uhuru/api db:pull",
+    "db:studio": "bun --filter @uhuru/api db:studio",
     "format": "biome format",
     "lint": "biome lint",
     "check": "biome check"
@@ -22,9 +27,7 @@
   "dependencies": {
     "@base-ui/react": "^1.3.0",
     "@elysiajs/eden": "^1.4.8",
-    "@faker-js/faker": "^10.3.0",
     "@fontsource-variable/raleway": "^5.2.8",
-    "@libsql/client": "^0.17.0",
     "@phosphor-icons/react": "^2.1.10",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/match-sorter-utils": "latest",
@@ -41,10 +44,6 @@
     "better-auth": "^1.5.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "drizzle-kit": "^0.31.9",
-    "drizzle-orm": "^0.45.1",
-    "drizzle-typebox": "^0.3.3",
-    "elysia": "^1.4.27",
     "lucide-react": "^0.545.0",
     "next-themes": "^0.4.6",
     "nitro": "npm:nitro-nightly@latest",
@@ -55,7 +54,6 @@
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.1.18",
     "tw-animate-css": "^1.4.0",
-    "ulidx": "^2.4.1",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -69,9 +67,7 @@
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^5.1.4",
     "bun-types": "^1.3.10",
-    "dotenv": "^17.3.1",
     "jsdom": "^28.1.0",
-    "tsx": "^4.21.0",
     "typescript": "^5.7.2",
     "vite": "^7.3.1",
     "vite-tsconfig-paths": "^5.1.4",
