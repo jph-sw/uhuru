@@ -101,7 +101,7 @@ function FieldRow({
 	);
 }
 
-async function RouteComponent() {
+function RouteComponent() {
 	const { site } = Route.useParams();
 
 	const [language, setLanguage] = useState<string>("en");
