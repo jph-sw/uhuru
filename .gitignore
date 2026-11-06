@@ -1,11 +1,16 @@
 # dependencies (bun install)
 node_modules
 
-database.sqlite
+# SQLite databases (data/ holds the development database)
+data/*.sqlite
+data/*.sqlite-*
+*.sqlite
 
 # output
 out
 dist
+.output
+.tanstack
 *.tgz
 
 # code coverage

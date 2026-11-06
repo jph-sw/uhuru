@@ -1,0 +1,19 @@
+{
+	"name": "@uhuru/openapi",
+	"private": true,
+	"type": "module",
+	"description": "OpenAPI spec of the Uhuru API and TypeScript types generated from it",
+	"exports": {
+		".": {
+			"types": "./uhuru.d.ts"
+		},
+		"./uhuru.yaml": "./uhuru.yaml"
+	},
+	"scripts": {
+		"generate": "openapi-typescript ./uhuru.yaml --output ./uhuru.d.ts"
+	},
+	"devDependencies": {
+		"openapi-typescript": "^7.13.0",
+		"typescript": "^5.7.2"
+	}
+}

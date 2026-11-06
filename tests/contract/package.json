@@ -1,0 +1,15 @@
+{
+	"name": "@uhuru/contract-tests",
+	"private": true,
+	"type": "module",
+	"description": "HTTP contract tests that any Uhuru backend must pass",
+	"scripts": {
+		"test": "bun --env-file=../../.env test --timeout 20000",
+		"test:bun-api": "bun scripts/with-bun-api.ts",
+		"typecheck": "tsc --noEmit"
+	},
+	"devDependencies": {
+		"bun-types": "^1.3.10",
+		"typescript": "^5.7.2"
+	}
+}
