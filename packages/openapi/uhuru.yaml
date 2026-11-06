@@ -467,10 +467,8 @@ paths:
                   type: string
       responses: 
         "200": 
-          &200
           description: "Success, empty body"
         "401": 
-          &401
           description: Unauthorized
           content: 
             text/plain: 
@@ -478,7 +476,6 @@ paths:
                 const: Unauthorized
                 type: string
         "403": 
-          &403
           description: Forbidden
           content: 
             text/plain: 
@@ -562,7 +559,12 @@ paths:
                     siteId: 
                       type: string
         "401": 
-          *401
+          description: Unauthorized
+          content: 
+            text/plain: 
+              schema: 
+                const: Unauthorized
+                type: string
         "422": 
           description: Response for status 422
           content: 
@@ -629,9 +631,14 @@ paths:
                   type: string
       responses: 
         "200": 
-          *200
+          description: "Success, empty body"
         "401": 
-          *401
+          description: Unauthorized
+          content: 
+            text/plain: 
+              schema: 
+                const: Unauthorized
+                type: string
         "422": 
           description: Response for status 422
           content: 
@@ -668,29 +675,16 @@ paths:
           required: true
           schema: 
             type: string
-      requestBody: 
-        required: true
-        content: 
-          application/json: 
-            schema: 
-              type: object
-              properties: 
-                {}
-          application/x-www-form-urlencoded: 
-            schema: 
-              type: object
-              properties: 
-                {}
-          multipart/form-data: 
-            schema: 
-              type: object
-              properties: 
-                {}
       responses: 
         "200": 
-          *200
+          description: "Success, empty body"
         "401": 
-          *401
+          description: Unauthorized
+          content: 
+            text/plain: 
+              schema: 
+                const: Unauthorized
+                type: string
         "422": 
           description: Response for status 422
           content: 
@@ -914,6 +908,12 @@ paths:
                   expected: 
                     type: string
       operationId: getApiInviteCheckByCode
+      parameters: 
+        - name: code
+          in: path
+          required: true
+          schema: 
+            type: string
   /api/invite: 
     post: 
       requestBody: 
@@ -1180,9 +1180,19 @@ paths:
                         - string
                         - "null"
         "401": 
-          *401
+          description: Unauthorized
+          content: 
+            text/plain: 
+              schema: 
+                const: Unauthorized
+                type: string
         "403": 
-          *403
+          description: Forbidden
+          content: 
+            text/plain: 
+              schema: 
+                const: Forbidden
+                type: string
         "422": 
           description: Response for status 422
           content: 

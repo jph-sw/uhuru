@@ -674,13 +674,7 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": Record<string, never>;
-                "application/x-www-form-urlencoded": Record<string, never>;
-                "multipart/form-data": Record<string, never>;
-            };
-        };
+        requestBody?: never;
         responses: {
             /** @description Success, empty body */
             200: {
@@ -879,7 +873,9 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                code: string;
+            };
             cookie?: never;
         };
         requestBody?: never;
