@@ -20,6 +20,7 @@ export const auth = betterAuth({
 		additionalFields: {
 			site_id: {
 				type: "string",
+				fieldName: "siteId",
 				required: false,
 				input: true,
 			},
