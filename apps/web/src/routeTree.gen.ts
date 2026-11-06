@@ -11,9 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
-import { Route as ApiSplatRouteImport } from './routes/api/$'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/_admin'
-import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthJoinCodeIndexRouteImport } from './routes/auth/join.$code.index'
 import { Route as AuthenticatedAdminAdminIndexRouteImport } from './routes/_authenticated/_admin/admin.index'
 import { Route as AuthenticatedAdminAdminSiteNewRouteImport } from './routes/_authenticated/_admin/admin.site-new'
@@ -34,18 +32,8 @@ const AuthSignInRoute = AuthSignInRouteImport.update({
   path: '/auth/sign-in',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiSplatRoute = ApiSplatRouteImport.update({
-  id: '/api/$',
-  path: '/api/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/_authenticated/_admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
-  id: '/api/auth/$',
-  path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthJoinCodeIndexRoute = AuthJoinCodeIndexRouteImport.update({
@@ -104,9 +92,7 @@ const AuthenticatedAdminAdminSiteSiteFieldsIndexRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/api/$': typeof ApiSplatRoute
   '/auth/sign-in': typeof AuthSignInRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
   '/admin/site-new': typeof AuthenticatedAdminAdminSiteNewRoute
   '/admin/': typeof AuthenticatedAdminAdminIndexRoute
   '/auth/join/$code/': typeof AuthJoinCodeIndexRoute
@@ -119,9 +105,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/api/$': typeof ApiSplatRoute
   '/auth/sign-in': typeof AuthSignInRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
   '/admin/site-new': typeof AuthenticatedAdminAdminSiteNewRoute
   '/admin': typeof AuthenticatedAdminAdminIndexRoute
   '/auth/join/$code': typeof AuthJoinCodeIndexRoute
@@ -136,9 +120,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated/_admin': typeof AuthenticatedAdminRouteWithChildren
-  '/api/$': typeof ApiSplatRoute
   '/auth/sign-in': typeof AuthSignInRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
   '/_authenticated/_admin/admin/site-new': typeof AuthenticatedAdminAdminSiteNewRoute
   '/_authenticated/_admin/admin/': typeof AuthenticatedAdminAdminIndexRoute
   '/auth/join/$code/': typeof AuthJoinCodeIndexRoute
@@ -153,9 +135,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/api/$'
     | '/auth/sign-in'
-    | '/api/auth/$'
     | '/admin/site-new'
     | '/admin/'
     | '/auth/join/$code/'
@@ -168,9 +148,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/api/$'
     | '/auth/sign-in'
-    | '/api/auth/$'
     | '/admin/site-new'
     | '/admin'
     | '/auth/join/$code'
@@ -184,9 +162,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated/_admin'
-    | '/api/$'
     | '/auth/sign-in'
-    | '/api/auth/$'
     | '/_authenticated/_admin/admin/site-new'
     | '/_authenticated/_admin/admin/'
     | '/auth/join/$code/'
@@ -201,9 +177,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
-  ApiSplatRoute: typeof ApiSplatRoute
   AuthSignInRoute: typeof AuthSignInRoute
-  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   AuthJoinCodeIndexRoute: typeof AuthJoinCodeIndexRoute
   AuthenticatedDashboardSSiteIndexRoute: typeof AuthenticatedDashboardSSiteIndexRoute
 }
@@ -224,25 +198,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignInRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/$': {
-      id: '/api/$'
-      path: '/api/$'
-      fullPath: '/api/$'
-      preLoaderRoute: typeof ApiSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_authenticated/_admin': {
       id: '/_authenticated/_admin'
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/auth/$': {
-      id: '/api/auth/$'
-      path: '/api/auth/$'
-      fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/join/$code/': {
@@ -342,9 +302,7 @@ const AuthenticatedAdminRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
-  ApiSplatRoute: ApiSplatRoute,
   AuthSignInRoute: AuthSignInRoute,
-  ApiAuthSplatRoute: ApiAuthSplatRoute,
   AuthJoinCodeIndexRoute: AuthJoinCodeIndexRoute,
   AuthenticatedDashboardSSiteIndexRoute: AuthenticatedDashboardSSiteIndexRoute,
 }

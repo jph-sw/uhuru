@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
 import { siteByIdQueryOptions } from "#/data/query-options/site";
 import { useAppForm } from "#/hooks/form";
-import { getTreaty } from "#/routes/api/$";
+import { api } from "#/lib/api";
 
 export const Route = createFileRoute(
 	"/_authenticated/_admin/admin/site/$site/settings",
@@ -26,24 +26,25 @@ function RouteComponent() {
 			languages: siteData?.languages?.join(", ") || "en",
 		},
 		onSubmit: async ({ value }) => {
-			const { api } = await getTreaty();
-
 			const langs = value.languages
 				.split(",")
 				.map((l: string) => l.trim())
 				.filter(Boolean);
 
-			const res = await api.sites({ id: site }).patch({
-				name: value.name,
-				domain: value.domain,
-				languages: langs.length > 0 ? langs : ["en"],
+			const res = await api.PATCH("/api/sites/{id}", {
+				params: { path: { id: site } },
+				body: {
+					name: value.name,
+					domain: value.domain,
+					languages: langs.length > 0 ? langs : ["en"],
+				},
 			});
 
 			if (res.error) {
 				form.setErrorMap({
 					onSubmit: {
 						fields: {},
-						form: res.error.value,
+						form: res.error,
 					},
 				});
 			} else {

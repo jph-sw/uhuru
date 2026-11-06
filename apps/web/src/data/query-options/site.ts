@@ -1,14 +1,13 @@
 import { queryOptions } from "@tanstack/react-query";
-import { getTreaty } from "#/routes/api/$";
+import { api, unwrap } from "#/lib/api";
 
 export const siteByIdQueryOptions = ({ siteId }: { siteId: string }) =>
 	queryOptions({
 		queryKey: ["site", siteId],
-		queryFn: async () => {
-			const { api } = await getTreaty();
-
-			const { data, error } = await api.sites({ id: siteId }).get();
-			if (error) throw error;
-			return data;
-		},
+		queryFn: async () =>
+			unwrap(
+				await api.GET("/api/sites/{id}", {
+					params: { path: { id: siteId } },
+				}),
+			),
 	});

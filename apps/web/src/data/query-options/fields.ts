@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import { getTreaty } from "#/routes/api/$";
+import { api, unwrap } from "#/lib/api";
 
 export const fieldQueryOptions = ({
 	siteId,
@@ -10,13 +10,13 @@ export const fieldQueryOptions = ({
 }) =>
 	queryOptions({
 		queryKey: ["fields", siteId, language],
-		queryFn: async () => {
-			const { api } = await getTreaty();
-
-			const { data, error } = await api.fields.site({ siteId }).get({
-				query: language ? { language } : undefined,
-			});
-			if (error) throw error;
-			return data;
-		},
+		queryFn: async () =>
+			unwrap(
+				await api.GET("/api/fields/site/{siteId}", {
+					params: {
+						path: { siteId },
+						query: language ? { language } : undefined,
+					},
+				}),
+			),
 	});

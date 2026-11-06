@@ -1,13 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
-import { getTreaty } from "#/routes/api/$";
+import { api, unwrap } from "#/lib/api";
 
 export const siteQueryOptions = queryOptions({
 	queryKey: ["sites"],
-	queryFn: async () => {
-		const { api } = await getTreaty();
-
-		const { data, error } = await api.sites.get();
-		if (error) throw error;
-		return data;
-	},
+	queryFn: async () => unwrap(await api.GET("/api/sites")),
 });

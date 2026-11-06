@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
 import { useAppForm } from "#/hooks/form";
-import { getTreaty } from "#/routes/api/$";
+import { api } from "#/lib/api";
 
 export const Route = createFileRoute("/_authenticated/_admin/admin/site-new")({
 	component: RouteComponent,
@@ -18,18 +18,18 @@ function RouteComponent() {
 			domain: "",
 		},
 		onSubmit: async ({ value }) => {
-			const { api } = await getTreaty();
-
-			const res = await api.sites.post({
-				name: value.name,
-				domain: value.domain,
+			const res = await api.POST("/api/sites", {
+				body: {
+					name: value.name,
+					domain: value.domain,
+				},
 			});
 
 			if (res.error) {
 				form.setErrorMap({
 					onSubmit: {
 						fields: {},
-						form: res.error.value,
+						form: res.error,
 					},
 				});
 			} else {

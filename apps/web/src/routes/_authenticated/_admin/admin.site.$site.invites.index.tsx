@@ -23,7 +23,7 @@ import {
 import { inviteQueryOptions } from "#/data/query-options/invites";
 import { useCopyToClipboard } from "#/hooks/clipboard";
 import { useAppForm } from "#/hooks/form";
-import { getTreaty } from "#/routes/api/$";
+import { api } from "#/lib/api";
 
 export const Route = createFileRoute(
 	"/_authenticated/_admin/admin/site/$site/invites/",
@@ -44,18 +44,18 @@ function RouteComponent() {
 			maxUses: "1",
 		},
 		onSubmit: async ({ value }) => {
-			const { api } = await getTreaty();
-
-			const res = await api.invite.post({
-				maxUses: value.maxUses,
-				siteId: site,
+			const res = await api.POST("/api/invite", {
+				body: {
+					maxUses: value.maxUses,
+					siteId: site,
+				},
 			});
 
 			if (res.error) {
 				form.setErrorMap({
 					onSubmit: {
 						fields: {},
-						form: res.error.value,
+						form: res.error,
 					},
 				});
 			} else {

@@ -1,4 +1,3 @@
-import type { User } from "better-auth";
 import {
 	Table,
 	TableBody,
@@ -7,6 +6,8 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
+
+type User = { id: string; name: string; email: string };
 
 export function UsersTable({ users }: { users: User[] | undefined }) {
 	return (

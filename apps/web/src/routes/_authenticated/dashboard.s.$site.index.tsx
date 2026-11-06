@@ -10,7 +10,7 @@ import { fieldQueryOptions } from "#/data/query-options/fields";
 import { siteByIdQueryOptions } from "#/data/query-options/site";
 import { authClient } from "#/lib/auth-client";
 import { type Field, groupFields } from "#/lib/utils";
-import { getTreaty } from "../api/$";
+import { api } from "#/lib/api";
 
 export const Route = createFileRoute("/_authenticated/dashboard/s/$site/")({
 	component: RouteComponent,
@@ -33,17 +33,20 @@ function FieldRow({
 	const subKey = field.key?.split(".").slice(1).join(".") ?? field.key ?? "";
 
 	async function save() {
-		const { api } = await getTreaty();
-
 		setSaving(true);
 		if (field.id) {
-			await api.fields({ id: field.id }).patch({ content: value });
+			await api.PATCH("/api/fields/{id}", {
+				params: { path: { id: field.id } },
+				body: { content: value },
+			});
 		} else {
-			await api.fields.post({
-				key: field.key ?? "",
-				content: value,
-				siteId,
-				language,
+			await api.POST("/api/fields", {
+				body: {
+					key: field.key ?? "",
+					content: value,
+					siteId,
+					language,
+				},
 			});
 		}
 		await queryClient.invalidateQueries({

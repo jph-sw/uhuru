@@ -13,8 +13,8 @@ export function InvitesTable({
 	invites:
 		| {
 				id: string;
-				createdAt: Date;
-				updatedAt: Date;
+				createdAt: string;
+				updatedAt: string;
 				siteId: string;
 				code: string;
 				maxUses: string;

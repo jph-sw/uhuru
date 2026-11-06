@@ -15,7 +15,7 @@ import { Textarea } from "#/components/ui/textarea";
 import { fieldQueryOptions } from "#/data/query-options/fields";
 import { siteByIdQueryOptions } from "#/data/query-options/site";
 import { useAppForm } from "#/hooks/form";
-import { getTreaty } from "#/routes/api/$";
+import { api } from "#/lib/api";
 
 export const Route = createFileRoute(
 	"/_authenticated/_admin/admin/site/$site/fields/",
@@ -60,23 +60,27 @@ function FieldRow({
 	async function remove() {
 		if (!field.id) return;
 
-		const { api } = await getTreaty();
-		await api.fields({ id: field.id }).delete();
+		await api.DELETE("/api/fields/{id}", {
+			params: { path: { id: field.id } },
+		});
 		await queryClient.invalidateQueries({ queryKey: ["fields", siteId] });
 	}
 
 	async function save() {
-		const { api } = await getTreaty();
-
 		setSaving(true);
 		if (field.id) {
-			await api.fields({ id: field.id }).patch({ content: value });
+			await api.PATCH("/api/fields/{id}", {
+				params: { path: { id: field.id } },
+				body: { content: value },
+			});
 		} else {
-			await api.fields.post({
-				key: field.key ?? "",
-				content: value,
-				siteId,
-				language,
+			await api.POST("/api/fields", {
+				body: {
+					key: field.key ?? "",
+					content: value,
+					siteId,
+					language,
+				},
 			});
 		}
 		await queryClient.invalidateQueries({ queryKey: ["fields", siteId] });
@@ -168,13 +172,13 @@ function RouteComponent() {
 	const form = useAppForm({
 		defaultValues: { key: "", content: "" },
 		onSubmit: async ({ value }) => {
-			const { api } = await getTreaty();
-
-			await api.fields.post({
-				key: value.key,
-				content: value.content,
-				siteId: site,
-				language,
+			await api.POST("/api/fields", {
+				body: {
+					key: value.key,
+					content: value.content,
+					siteId: site,
+					language,
+				},
 			});
 			await queryClient.invalidateQueries({ queryKey: ["fields", site] });
 			form.reset();

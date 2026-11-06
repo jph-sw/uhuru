@@ -8,13 +8,14 @@ import {
 } from "#/components/ui/card";
 import { useAppForm } from "#/hooks/form";
 import { authClient } from "#/lib/auth-client";
-import { getTreaty } from "../api/$";
+import { api } from "#/lib/api";
 
 export const Route = createFileRoute("/auth/join/$code/")({
 	component: RouteComponent,
 	loader: async ({ params }) => {
-		const { api } = await getTreaty();
-		const { data, error } = await api.invite.check({ code: params.code }).get();
+		const { data, error } = await api.GET("/api/invite/check/{code}", {
+			params: { path: { code: params.code } },
+		});
 
 		if (error || !data.valid) throw redirect({ to: "/" });
 
@@ -33,20 +34,21 @@ function RouteComponent() {
 			password: "",
 		},
 		onSubmit: async ({ value }) => {
-			const { api } = await getTreaty();
-			const res = await api.join.post({
-				code: invite?.code ?? "",
-				name: value.name,
-				email: value.email,
-				password: value.password,
-				siteId: invite?.siteId ?? "",
+			const res = await api.POST("/api/join", {
+				body: {
+					code: invite?.code ?? "",
+					name: value.name,
+					email: value.email,
+					password: value.password,
+					siteId: invite?.siteId ?? "",
+				},
 			});
 
 			if (res.error) {
 				form.setErrorMap({
 					onSubmit: {
 						fields: {},
-						form: res.error.value,
+						form: res.error,
 					},
 				});
 			} else {
