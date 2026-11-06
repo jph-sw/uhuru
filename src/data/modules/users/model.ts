@@ -1,9 +1,5 @@
 import { t } from "elysia";
-import { user as userTable } from "#/db/schema";
-import { spread } from "#/db/utils";
-
-const { siteId } = spread(userTable, "insert");
 
 export const UsersModel = {
-	selectUsersBody: t.Object({ siteId }),
+	selectUsersBody: t.Object({ siteId: t.String() }),
 };

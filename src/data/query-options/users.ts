@@ -7,7 +7,7 @@ export const usersQueryOptions = ({ siteId }: { siteId: string }) =>
 		queryFn: async () => {
 			const { api } = await getTreaty();
 
-			const { data, error } = await api.users.site({ site_id: siteId }).get();
+			const { data, error } = await api.users.site({ siteId }).get();
 			if (error) throw error;
 			return data;
 		},
