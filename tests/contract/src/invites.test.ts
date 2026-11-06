@@ -20,7 +20,10 @@ describe("invites and joining", () => {
 	});
 
 	test("POST /api/invite returns an array with the new invite", async () => {
-		const res = await admin.post("/api/invite", { maxUses: "3", siteId: site.id });
+		const res = await admin.post("/api/invite", {
+			maxUses: "3",
+			siteId: site.id,
+		});
 		expect(res.status).toBe(200);
 
 		const invites = res.json as Invite[];
@@ -31,7 +34,7 @@ describe("invites and joining", () => {
 		expect(invites[0].createdAt).toMatch(ISO_DATE);
 	});
 
-	test("maxUses defaults to \"1\"", async () => {
+	test('maxUses defaults to "1"', async () => {
 		const res = await admin.post("/api/invite", { siteId: site.id });
 		expect((res.json as Invite[])[0].maxUses).toBe("1");
 	});

@@ -178,7 +178,10 @@ export async function joinedClient(admin: Client, siteId: string) {
 		password,
 		siteId,
 	});
-	if (res.status !== 200 || (res.json as { success?: boolean })?.success !== true)
+	if (
+		res.status !== 200 ||
+		(res.json as { success?: boolean })?.success !== true
+	)
 		throw new Error(`Joining failed: ${res.status} ${res.text}`);
 
 	const client = new Client();

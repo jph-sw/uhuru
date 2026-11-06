@@ -133,7 +133,9 @@ describe("auth", () => {
 		const tampered = new Client();
 		tampered.cookies.set(
 			name,
-			encodeURIComponent(`${token}.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=`),
+			encodeURIComponent(
+				`${token}.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=`,
+			),
 		);
 		expect((await tampered.get("/api/auth/get-session")).json).toBeNull();
 
